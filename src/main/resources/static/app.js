@@ -12,7 +12,7 @@ config(['$locationProvider', '$routeProvider', "$httpProvider", function($locati
 }])
 .controller('NavigationCtrl', ['$scope', '$rootScope', '$http', '$location', 'AuthService',
   function($scope, $rootScope, $http, $location, authService) {
-    var self = this
+    var self = this;
 
     $rootScope.selectedTab = $location.path() || '/';
 
@@ -21,11 +21,11 @@ config(['$locationProvider', '$routeProvider', "$httpProvider", function($locati
       $rootScope.authenticated = false;
       $location.path("#/");
       $rootScope.selectedTab = "/";
-    }
+    };
 
     $scope.setSelectedTab = function(tab) {
       $rootScope.selectedTab = tab;
-    }
+    };
 
     $scope.tabClass = function(tab) {
       if ($rootScope.selectedTab == tab) {
@@ -33,12 +33,12 @@ config(['$locationProvider', '$routeProvider', "$httpProvider", function($locati
       } else {
         return "";
       }
-    }
+    };
 
     if ($rootScope.authenticated) {
       $location.path('/');
       $rootScope.selectedTab = '/';
-      return;
+
     }
   }
 ]);

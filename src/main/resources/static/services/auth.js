@@ -27,7 +27,7 @@ angular.module('myApp.services', [])
             'Content-Type': 'application/json'
           };
       }
-  }
+  };
 
   var getUser = function() {
     return $http({

@@ -24,7 +24,7 @@ function DashboardCtrl($scope, $rootScope, $http, isAuthenticated, authService) 
 		}
 		$scope.serverResponse = res;
 		$scope.serverResponse.data = JSON.stringify(res.data, null, 2);
-	}
+	};
 
 	if ($rootScope.authenticated) {
 		authService.getUser()
@@ -41,7 +41,7 @@ function DashboardCtrl($scope, $rootScope, $http, isAuthenticated, authService) 
 		.catch(function(response) {
 			setResponse(response, false);
 		});
-	}
+	};
 
 	$scope.getAllUserInfo = function() {
     $http({

@@ -15,7 +15,7 @@ import java.io.UnsupportedEncodingException;
 @Service
 public class EmailService {
 
-    @Autowired
+   // @Autowired
     public JavaMailSender emailSender;
     private String MAIL_FROM = "testmailpersonalcmp@gmail.com";
 

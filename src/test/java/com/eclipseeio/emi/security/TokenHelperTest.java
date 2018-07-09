@@ -120,7 +120,7 @@ public class TokenHelperTest {
         device.setNormal(true);
         final String token = createToken(this.device);
 
-        assertThat(tokenHelper.getAudienceFromToken(token)).isEqualTo(tokenHelper.AUDIENCE_WEB);
+        assertThat(tokenHelper.getAudienceFromToken(token)).isEqualTo(TokenHelper.AUDIENCE_WEB);
     }
 
     @Test
@@ -128,7 +128,7 @@ public class TokenHelperTest {
         when(timeProviderMock.now()).thenReturn(DateUtil.now());
         device.setMobile(true);
         final String token = createToken(this.device);
-        assertThat(tokenHelper.getAudienceFromToken(token)).isEqualTo(tokenHelper.AUDIENCE_MOBILE);
+        assertThat(tokenHelper.getAudienceFromToken(token)).isEqualTo(TokenHelper.AUDIENCE_MOBILE);
     }
 
     @Test
