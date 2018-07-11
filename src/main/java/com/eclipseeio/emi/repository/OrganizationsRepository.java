@@ -6,5 +6,5 @@ import com.eclipseeio.emi.model.Organizations;
 
 public interface OrganizationsRepository extends JpaRepository<Organizations, Long> {
 	
-	public Organizations findByOrganizationName(String oString);
+	Organizations findByOrganizationName(String oString);
 }

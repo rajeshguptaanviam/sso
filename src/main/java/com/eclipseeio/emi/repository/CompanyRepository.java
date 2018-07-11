@@ -6,6 +6,6 @@ import com.eclipseeio.emi.model.Company;
 
 public interface CompanyRepository extends JpaRepository<Company, Long> {
 
-	public Company findByCompanyName(String name);
+	Company findByCompanyName(String name);
 
 }

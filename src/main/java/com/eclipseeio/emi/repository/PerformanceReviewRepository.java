@@ -7,6 +7,6 @@ import com.eclipseeio.emi.model.PerformanceReview;
 
 public interface PerformanceReviewRepository extends JpaRepository<PerformanceReview, Long> {
 
-	public PerformanceReview findByPerformanceReviewName(String performanceReviewName);
+	PerformanceReview findByPerformanceReviewName(String performanceReviewName);
 
 }

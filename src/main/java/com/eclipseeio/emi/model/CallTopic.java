@@ -9,21 +9,20 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
-@Table(name = "Assign_To")
-public class AssignTo {
+@Table(name = "call_topic")
+public class CallTopic {
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-
-
-    @Column(name = "AssignTo_name", unique = true)
+    @Column(name = "call_topic_name", unique = true)
     @NotNull
-    private String assignName;
+    private String callTopicName;
+
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -42,12 +41,12 @@ public class AssignTo {
         this.id = id;
     }
 
-    public String getAssignName() {
-        return assignName;
+    public String getCallTopicName() {
+        return callTopicName;
     }
 
-    public void setAssignName(String assignName) {
-        this.assignName = assignName;
+    public void setCallTopicName(String callTopicName) {
+        this.callTopicName = callTopicName;
     }
 
     public Date getCreatedAt() {

@@ -2,6 +2,7 @@ package com.eclipseeio.emi.model;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -82,6 +83,31 @@ public class Company implements Serializable {
 	 
 	 @OneToMany(targetEntity = CompanyDepartment.class, cascade = CascadeType.ALL, mappedBy = "company")
 	 private List<CompanyDepartment> companyDepartment;
+
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "id")
+	private List<User> users;
+
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "id")
+    private List<CallDetail> callDetail;
+
+
+    public List<CallDetail> getCallDetail() {
+        return callDetail;
+    }
+
+    public void setCallDetail(List<CallDetail> callDetail) {
+        this.callDetail = callDetail;
+    }
+
+    public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
 
 	public Long getId() {
 		return id;

@@ -7,7 +7,7 @@ import com.eclipseeio.emi.model.Industry;
 
 public interface IndustryRepository extends JpaRepository<Industry, Long> {
 
-	public Industry findByIndustryName(String industryName);
+	Industry findByIndustryName(String industryName);
 	
 
 }

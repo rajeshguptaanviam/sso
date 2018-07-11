@@ -9,15 +9,24 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
-@Table(name = "States")
-public class States {
+@Table(name = "call_detail")
+
+public class CallDetail
+{
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(name = "call_topic")
+    private String callTopic;
+
+    @Column(name = "conversation_content")
+    private String conversationContent;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -27,19 +36,48 @@ public class States {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    @Column(name = "state_name", unique = true)
-    @NotNull
-    private String stateName;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
-    
-    @OneToOne(cascade=CascadeType.ALL)
+
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "company_id", referencedColumnName = "id")
     private Company company;
+
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
     public Long getId() {
         return id;
+
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getCallTopic() {
+        return callTopic;
+    }
+
+    public void setCallTopic(String callTopic) {
+        this.callTopic = callTopic;
+    }
+
+    public String getConversationContent() {
+        return conversationContent;
+    }
+
+    public void setConversationContent(String conversationContent) {
+        this.conversationContent = conversationContent;
     }
 
     public Date getCreatedAt() {
@@ -58,21 +96,11 @@ public class States {
         this.updatedAt = updatedAt;
     }
 
-    public String getStateName() {
-        return stateName;
+    public User getUser() {
+        return user;
     }
 
-    public void setStateName(String stateName) {
-        this.stateName = stateName;
+    public void setUser(User user) {
+        this.user = user;
     }
-
-	public Company getCompany() {
-		return company;
-	}
-
-	public void setCompany(Company company) {
-		this.company = company;
-	}
-
-
 }
