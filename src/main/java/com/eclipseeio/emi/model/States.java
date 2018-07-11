@@ -12,7 +12,7 @@ import java.util.Date;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
 @Table(name = "StateProv")
-public class StateProv {
+public class States {
 
     @Id
     @Column(name = "id")
@@ -31,6 +31,9 @@ public class StateProv {
     @NotNull
     private String stateName;
 
+    
+    @OneToOne(cascade=CascadeType.ALL)
+    private Company company;
     public Long getId() {
         return id;
     }
@@ -63,6 +66,13 @@ public class StateProv {
         this.stateName = stateName;
     }
 
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
 
 
 }

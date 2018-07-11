@@ -1,20 +1,16 @@
 package com.eclipseeio.emi.model;
 
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import java.sql.Date;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
-import java.util.List;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
-@Table(name = "Organizations")
-class Organizations {
+@Table(name = "organizations")
+public class Organizations {
 
     @Id
     @Column(name = "id")
@@ -95,5 +91,4 @@ class Organizations {
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
-
 }
