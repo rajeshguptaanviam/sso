@@ -4,10 +4,17 @@ INSERT INTO USERS (id, username, password, first_name, last_name, email, phone_n
 
 INSERT INTO AUTHORITY (id, name) VALUES (1, 'ROLE_USER');
 INSERT INTO AUTHORITY (id, name) VALUES (2, 'ROLE_ADMIN');
+INSERT INTO AUTHORITY (id, name) VALUES (3, 'ROLE_EMP');
+INSERT INTO AUTHORITY (id, name) VALUES (4, 'ROLE_HR');
 
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (1, 1);
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (2, 1);
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (2, 2);
+<<<<<<< HEAD
+=======
+INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (2, 3);
+INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (2, 4);
+>>>>>>> 09849ff10ffdd7661d830e177018f64d3c5e0243
 
 DELETE FROM State;
 INSERT INTO State(id,state_name,created_at,updated_at) VALUES (1,'AB-Alberta',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
@@ -70,6 +77,7 @@ DELETE FROM Assign_To;
 INSERT INTO Assign_To(id,Assign_To_name,created_at,updated_at) VALUES (1,'Domenic Richichi',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 INSERT INTO Assign_To(id,Assign_To_name,created_at,updated_at) VALUES (2,'Natalie Hansford',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
+<<<<<<< HEAD
 
 DELETE FROM call_topic;
 INSERT INTO call_topic(id,call_topic_name,created_at,updated_at) VALUES (1,'Benefits',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
@@ -85,3 +93,5 @@ INSERT INTO call_topic(id,call_topic_name,created_at,updated_at) VALUES (10,'Ter
 INSERT INTO call_topic(id,call_topic_name,created_at,updated_at) VALUES (11,'Training',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
 
+=======
+>>>>>>> 09849ff10ffdd7661d830e177018f64d3c5e0243

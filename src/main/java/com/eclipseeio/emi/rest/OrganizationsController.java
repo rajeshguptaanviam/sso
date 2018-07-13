@@ -21,7 +21,11 @@ public class OrganizationsController {
 	private OrganizationsRepository organizationsRepository;
 
 	@RequestMapping(method = RequestMethod.POST, value = "addOrganization")
+<<<<<<< HEAD
 	/*@PreAuthorize("hasRole('ADMIN','HR')")*/
+=======
+	@PreAuthorize("hasAnyRole('ADMIN','HR')")
+>>>>>>> 09849ff10ffdd7661d830e177018f64d3c5e0243
 	public Result createOrg(OrganizationDTO organizationDTO) {
 		Result result = Validator.validateOrganization(organizationDTO, organizationsRepository);
 		if (result.isSuccess()) {
