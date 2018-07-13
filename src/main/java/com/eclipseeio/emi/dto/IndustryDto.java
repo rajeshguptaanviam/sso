@@ -1,36 +1,21 @@
-package com.eclipseeio.emi.model;
-import com.fasterxml.jackson.annotation.JsonInclude;
+package com.eclipseeio.emi.dto;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+public class IndustryDto {
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@Entity
-@Table(name = "Industry")
-public class Industry {
-
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "industry_name", unique = true)
     private String industryName;
 
-    @CreationTimestamp
-    @Column(name = "created_at")
+
     private Date createdAt;
 
-    @UpdateTimestamp
-    @Column(name = "updated_at")
     private Date updatedAt;
 
-
-    @Column
     private Boolean active;
 
     public Long getId() {
@@ -55,14 +40,6 @@ public class Industry {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
     }
 
     public Boolean getActive() {

@@ -12,7 +12,8 @@ public class Result {
     private Page page;
 
     private List<Authority> authorities;
-
+private  List<Industry> industries;
+    private  Industry industry;
     private Map<String, Long> countSet;
     private String message;
 
@@ -58,5 +59,19 @@ public class Result {
         this.success = success;
     }
 
+    public List<Industry> getIndustries() {
+        return industries;
+    }
 
+    public void setIndustries(List<Industry> industries) {
+        this.industries = industries;
+    }
+
+    public Industry getIndustry() {
+        return industry;
+    }
+
+    public void setIndustry(Industry industry) {
+        this.industry = industry;
+    }
 }

@@ -1,17 +1,11 @@
 package com.eclipseeio.emi.service;
 
 import com.eclipseeio.emi.dto.CompanyDTO;
+import com.eclipseeio.emi.dto.IndustryDto;
 import com.eclipseeio.emi.dto.OrganizationDTO;
 import com.eclipseeio.emi.dto.UserDto;
-import com.eclipseeio.emi.model.AssignTo;
-import com.eclipseeio.emi.model.Company;
-import com.eclipseeio.emi.model.Organizations;
-import com.eclipseeio.emi.model.Result;
-import com.eclipseeio.emi.model.User;
-import com.eclipseeio.emi.repository.AssignToRepository;
-import com.eclipseeio.emi.repository.CompanyRepository;
-import com.eclipseeio.emi.repository.OrganizationsRepository;
-import com.eclipseeio.emi.repository.UserRepository;
+import com.eclipseeio.emi.model.*;
+import com.eclipseeio.emi.repository.*;
 
 public class Validator {
 
@@ -89,6 +83,26 @@ public class Validator {
 
 		return result;
 	}
+
+
+
+	public static Result validateIndustry(IndustryDto industryDto,
+										  IndustryRepository industryRepository) {
+		Result result = new Result();
+		result.setSuccess(true);
+		if (industryDto == null) {
+			result.setMessage("no input params found");
+			result.setSuccess(false);
+		}
+		Industry industry=industryRepository.findByIndustryName(industryDto.getIndustryName());
+
+			if (industry != null) {
+				result.setMessage("Please try another industry name.It is already taken");
+				result.setSuccess(false);
+			}
+
+		return result; }
+
 
 	public static Result validateCompany(CompanyDTO companyDTO, CompanyRepository companyRepository,
 			OrganizationsRepository organizationsRepository) {
