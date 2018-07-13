@@ -89,7 +89,7 @@ public class Company implements Serializable {
 	private List<User> users;
 
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "id")
+  /*  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "id")
     private List<CallDetail> callDetail;
 
 
@@ -99,7 +99,7 @@ public class Company implements Serializable {
 
     public void setCallDetail(List<CallDetail> callDetail) {
         this.callDetail = callDetail;
-    }
+    }*/
 
     public List<User> getUsers() {
 		return users;

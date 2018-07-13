@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eclipseeio.emi.dto.CompanyDTO;
-import com.eclipseeio.emi.dto.OrganizationDTO;
 import com.eclipseeio.emi.model.Company;
 import com.eclipseeio.emi.model.Industry;
 import com.eclipseeio.emi.model.Organizations;
@@ -45,10 +44,21 @@ public class CompanyController {
 				company.setFax(companyDTO.getFax());
 				company.setHealthAndSafetyInspection(companyDTO.getHealthAndSafetyInspection());
 				company.setNeedToCarryOverVacation(companyDTO.getNeedToCarryOverVacation());
-				Industry industry = industryRepository.findByIndustryName(companyDTO.getIndustry());
-				if (industry != null) {
-					company.setIndustry(industry);
+				
+				Organizations organizations=organizationsRepository.findByOrganizationName(companyDTO.getCompanyName());
+				if (organizations != null){ company.setOrganizations(organizations);}
+				else{ 
+					result.setMessage("Please provide a valid organization does not exist");
+					return result;
 				}
+				Industry industry = industryRepository.findByIndustryName(companyDTO.getIndustry());
+				if (industry != null){ company.setIndustry(industry);}
+				else{ 
+					result.setMessage("Please provide a valid Industry does not exist");
+					return result;
+				}
+		
+					
 				companyRepository.save(company);
 				result.setSuccess(true);
 				result.setMessage(MessageResource.MESSAGE_CREATE);
@@ -59,5 +69,4 @@ public class CompanyController {
 		}
 		return result;
 	}
-
 }
