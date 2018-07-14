@@ -59,24 +59,24 @@ public class Company implements Serializable {
 	@Column(name = "need_to_carry_over_vacation")
 	private Boolean NeedToCarryOverVacation;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(fetch= FetchType.EAGER)
 	private Industry industry;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(fetch= FetchType.EAGER)
 	private States states;
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(fetch= FetchType.EAGER)
 	private AdditionalRequirements additionalRequirements;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(fetch= FetchType.EAGER)
 	private Benefits benefits;
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(fetch= FetchType.EAGER)
 	private AssignTo assignTo;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	 @JoinColumn(name = "organizations_id", referencedColumnName = "id")
 	private Organizations organizations;
 	 
-	 @OneToMany(targetEntity = CompanyDepartment.class, cascade = CascadeType.ALL, mappedBy = "company")
+	 @OneToMany(targetEntity = CompanyDepartment.class, mappedBy = "company")
 	 private List<CompanyDepartment> companyDepartment;
 
 
@@ -85,7 +85,7 @@ public class Company implements Serializable {
 	private User users;
 
 
- 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "id")
+ 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "id")
     private List<CallDetail> callDetail;
 
 

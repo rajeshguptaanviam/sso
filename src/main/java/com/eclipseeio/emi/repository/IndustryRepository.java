@@ -11,6 +11,7 @@ import java.util.List;
 public interface IndustryRepository extends JpaRepository<Industry, Long> {
 
 	Industry findByIndustryName(String industryName);
+	Industry findById(Long aLong);
 
 	Industry findByIdAndActive(Long id,boolean active);
 

@@ -131,7 +131,7 @@ public class Validator {
 			result.setSuccess(false);
 		} else if (TextUtils.isEmpty(companyDTO.getWebsite())) {
 			result.setSuccess(false);
-		} else if (TextUtils.isEmpty(companyDTO.getWSIBFirmNo())) {
+		} else if (TextUtils.isEmpty(companyDTO.getwSIBFirmNo())) {
 			result.setMessage("WSIB Firm No is required*");
 			result.setSuccess(false);
 		} else if (TextUtils.isEmpty(companyDTO.getEmail())) {
@@ -151,9 +151,9 @@ public class Validator {
 			result.setSuccess(false);
 		}
 		if (result.isSuccess()) {
-			Organizations _company = organizationsRepository.findByOrganizationName(companyDTO.getOrganizationName());
+			Company _company = companyRepository.findById(Long.parseLong(companyDTO.getCompanyName()));
 			if (_company != null) {
-				result.setMessage("Please try another Organization Name  its already taken");
+				result.setMessage("Please try another Company Name  its already taken");
 				result.setSuccess(false);
 			}
 		}

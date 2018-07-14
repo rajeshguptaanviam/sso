@@ -60,14 +60,14 @@ public class CompanyController {
                 company.setFax(companyDTO.getFax());
                 company.setHealthAndSafetyInspection(companyDTO.getHealthAndSafetyInspection());
                 company.setNeedToCarryOverVacation(companyDTO.getNeedToCarryOverVacation());
-                Organizations organizations = organizationsRepository.findByOrganizationName(companyDTO.getCompanyName());
+                Organizations organizations = organizationsRepository.findById(Long.parseLong(companyDTO.getOrganizationName()));
                 if (organizations != null) {
                     company.setOrganizations(organizations);
                 } else {
                     result.setMessage("Please provide a valid organization does not exist");
                     return result;
                 }
-                Industry industry = industryRepository.findByIndustryName(companyDTO.getIndustry());
+                Industry industry = industryRepository.findById(Long.parseLong(companyDTO.getIndustry()));
                 if (industry != null) {
                     company.setIndustry(industry);
                 } else {
@@ -99,7 +99,7 @@ public class CompanyController {
                     return result;
                 }
 
-                AdditionalRequirements additionalRequirements = additionalRequirementsRepository.findByAdditionalRequirementsName(companyDTO.getAdditionalRequirements());
+                AdditionalRequirements additionalRequirements = additionalRequirementsRepository.findById(Long.parseLong(companyDTO.getAdditionalRequirements()));
                 if (states != null) {
                     company.setAdditionalRequirements(additionalRequirements);
                 } else {
@@ -112,6 +112,7 @@ public class CompanyController {
             } catch (Exception e) {
                 result.setSuccess(false);
                 result.setMessage(e.getMessage());
+                e.printStackTrace();
             }
         }
         return result;
@@ -175,8 +176,6 @@ public class CompanyController {
                         result.setMessage("Please provide a valid benefits name & it  does not exist");
                         return result;
                     }
-
-
                     AssignTo assignTo = assignToRepository.findByAssignName(companyDTO.getAssignTo());
                     if (states != null) {
                         company.setAssignTo(assignTo);
@@ -215,7 +214,6 @@ public class CompanyController {
         try {
             Company company = companyRepository.findById(id);
             if (company != null) {
-
                 result.setMessage(MessageResource.MESSAGE_DELETE);
                 companyRepository.delete(company);
             } else {

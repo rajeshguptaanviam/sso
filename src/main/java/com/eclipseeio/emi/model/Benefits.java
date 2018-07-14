@@ -22,9 +22,9 @@ public class Benefits {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "Benefits_name", unique = true)
+    @Column(name = "benefits_name", unique = true)
     @NotNull
-    private String BenefitsName;
+    private String benefitsName;
 
     @OneToOne(cascade=CascadeType.ALL)
     private Company company;
@@ -46,11 +46,11 @@ public class Benefits {
     }
 
     public String getBenefitsName() {
-        return BenefitsName;
+        return benefitsName;
     }
 
     public void setBenefitsName(String benefitsName) {
-        BenefitsName = benefitsName;
+        this.benefitsName = benefitsName;
     }
 
     public Date getCreatedAt() {

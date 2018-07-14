@@ -31,7 +31,7 @@ public class CompanyResponse implements Serializable {
   //  private List<CallDetail> callDetail;
     private final Integer createdOn;
     private final String modifiedOn;
-    private final UserResponse user;
+  //  private final UserResponse user;
    // private final JwtProject project;
 
 
@@ -50,7 +50,7 @@ public class CompanyResponse implements Serializable {
         this.website= enquiry.getWebsite();
         this.WSIBFirmNo = enquiry.getWSIBFirmNo();
         this.WSIBRateGroupNo =enquiry.getWSIBRateGroupNo();
-        this.user = UserResponseFactory.create(enquiry.getUsers());
+        //this.user = UserResponseFactory.create(enquiry.getUsers());
       //  this.project = JwtProjectFactory.create(enquiry.getProject());
     }
 
@@ -230,9 +230,9 @@ public class CompanyResponse implements Serializable {
         return modifiedOn;
     }
 
-    public UserResponse getUser() {
+    /*public UserResponse getUser() {
         return user;
-    }
+    }*/
 
   /*  public JwtProject getProject() {
         return project;

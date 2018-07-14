@@ -6,206 +6,204 @@ package com.eclipseeio.emi.dto;
 
 public class CompanyDTO {
 
-	private Long id;
+    private Long id;
 
-	private String companyName;
-	private String address;
-	private String city;
-	private String website;
-	private String state;
-	private String organizationName;
-	private String industry;
-	private String benfites;
-	private String assignTo;
-	private String additionalRequirements;
-	
+    private String companyName;
+    private String address;
+    private String city;
+    private String website;
+    private String state;
+    private String organizationName;
+    private String industry;
+    private String benfites;
+    private String assignTo;
+    private String additionalRequirements;
 
-	
-	private String email;
-	private String contactName;
 
-	private Integer phone;
+    private String email;
+    private String contactName;
 
-	private Integer fax;
+    private Integer phone;
 
-	private String WSIBFirmNo;
+    private Integer fax;
 
-	private String WSIBRateGroupNo;
+    private String wSIBFirmNo;
 
-	private String HealthAndSafetyInspection;
+    private String wSIBRateGroupNo;
 
-	private String RequireJHSCMeeting;
+    private String healthAndSafetyInspection;
 
-	private String NeedHelpWithHealthAndSafety;
+    private String requireJHSCMeeting;
 
-	private Boolean NeedToCarryOverVacation;
+    private String needHelpWithHealthAndSafety;
 
-	public Long getId() {
-		return id;
-	}
+    private Boolean needToCarryOverVacation;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getCompanyName() {
-		return companyName;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
-	}
+    public String getCompanyName() {
+        return companyName;
+    }
 
-	public String getAddress() {
-		return address;
-	}
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    public String getAddress() {
+        return address;
+    }
 
-	public String getCity() {
-		return city;
-	}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    public String getCity() {
+        return city;
+    }
 
-	public String getWebsite() {
-		return website;
-	}
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-	public void setWebsite(String website) {
-		this.website = website;
-	}
+    public String getWebsite() {
+        return website;
+    }
 
-	public String getContactName() {
-		return contactName;
-	}
+    public void setWebsite(String website) {
+        this.website = website;
+    }
 
-	public void setContactName(String contactName) {
-		this.contactName = contactName;
-	}
+    public String getContactName() {
+        return contactName;
+    }
 
-	public Integer getPhone() {
-		return phone;
-	}
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+    }
 
-	public void setPhone(Integer phone) {
-		this.phone = phone;
-	}
+    public Integer getPhone() {
+        return phone;
+    }
 
-	public Integer getFax() {
-		return fax;
-	}
+    public void setPhone(Integer phone) {
+        this.phone = phone;
+    }
 
-	public void setFax(Integer fax) {
-		this.fax = fax;
-	}
+    public Integer getFax() {
+        return fax;
+    }
 
-	public String getWSIBFirmNo() {
-		return WSIBFirmNo;
-	}
+    public void setFax(Integer fax) {
+        this.fax = fax;
+    }
 
-	public void setWSIBFirmNo(String wSIBFirmNo) {
-		WSIBFirmNo = wSIBFirmNo;
-	}
+    public String getState() {
+        return state;
+    }
 
-	public String getWSIBRateGroupNo() {
-		return WSIBRateGroupNo;
-	}
+    public void setState(String state) {
+        this.state = state;
+    }
 
-	public void setWSIBRateGroupNo(String wSIBRateGroupNo) {
-		WSIBRateGroupNo = wSIBRateGroupNo;
-	}
+    public String getOrganizationName() {
+        return organizationName;
+    }
 
-	public String getHealthAndSafetyInspection() {
-		return HealthAndSafetyInspection;
-	}
+    public void setOrganizationName(String organizationName) {
+        this.organizationName = organizationName;
+    }
 
-	public void setHealthAndSafetyInspection(String healthAndSafetyInspection) {
-		HealthAndSafetyInspection = healthAndSafetyInspection;
-	}
+    public String getIndustry() {
+        return industry;
+    }
 
-	public String getRequireJHSCMeeting() {
-		return RequireJHSCMeeting;
-	}
+    public void setIndustry(String industry) {
+        this.industry = industry;
+    }
 
-	public void setRequireJHSCMeeting(String requireJHSCMeeting) {
-		RequireJHSCMeeting = requireJHSCMeeting;
-	}
+    public String getBenfites() {
+        return benfites;
+    }
 
-	public String getNeedHelpWithHealthAndSafety() {
-		return NeedHelpWithHealthAndSafety;
-	}
+    public void setBenfites(String benfites) {
+        this.benfites = benfites;
+    }
 
-	public void setNeedHelpWithHealthAndSafety(String needHelpWithHealthAndSafety) {
-		NeedHelpWithHealthAndSafety = needHelpWithHealthAndSafety;
-	}
+    public String getAssignTo() {
+        return assignTo;
+    }
 
-	public Boolean getNeedToCarryOverVacation() {
-		return NeedToCarryOverVacation;
-	}
+    public void setAssignTo(String assignTo) {
+        this.assignTo = assignTo;
+    }
 
-	public void setNeedToCarryOverVacation(Boolean needToCarryOverVacation) {
-		NeedToCarryOverVacation = needToCarryOverVacation;
-	}
+    public String getAdditionalRequirements() {
+        return additionalRequirements;
+    }
 
-	public String getState() {
-		return state;
-	}
+    public void setAdditionalRequirements(String additionalRequirements) {
+        this.additionalRequirements = additionalRequirements;
+    }
 
-	public void setState(String state) {
-		this.state = state;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public String getOrganizationName() {
-		return organizationName;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setOrganizationName(String organizationName) {
-		this.organizationName = organizationName;
-	}
+    public String getwSIBFirmNo() {
+        return wSIBFirmNo;
+    }
 
-	public String getBenfites() {
-		return benfites;
-	}
+    public void setwSIBFirmNo(String wSIBFirmNo) {
+        this.wSIBFirmNo = wSIBFirmNo;
+    }
 
-	public void setBenfites(String benfites) {
-		this.benfites = benfites;
-	}
+    public String getwSIBRateGroupNo() {
+        return wSIBRateGroupNo;
+    }
 
-	public String getAssignTo() {
-		return assignTo;
-	}
+    public void setwSIBRateGroupNo(String wSIBRateGroupNo) {
+        this.wSIBRateGroupNo = wSIBRateGroupNo;
+    }
 
-	public void setAssignTo(String assignTo) {
-		this.assignTo = assignTo;
-	}
+    public String getHealthAndSafetyInspection() {
+        return healthAndSafetyInspection;
+    }
 
-	public String getAdditionalRequirements() {
-		return additionalRequirements;
-	}
+    public void setHealthAndSafetyInspection(String healthAndSafetyInspection) {
+        this.healthAndSafetyInspection = healthAndSafetyInspection;
+    }
 
-	public void setAdditionalRequirements(String additionalRequirements) {
-		this.additionalRequirements = additionalRequirements;
-	}
+    public String getRequireJHSCMeeting() {
+        return requireJHSCMeeting;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setRequireJHSCMeeting(String requireJHSCMeeting) {
+        this.requireJHSCMeeting = requireJHSCMeeting;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getNeedHelpWithHealthAndSafety() {
+        return needHelpWithHealthAndSafety;
+    }
 
-	public String getIndustry() {
-		return industry;
-	}
+    public void setNeedHelpWithHealthAndSafety(String needHelpWithHealthAndSafety) {
+        this.needHelpWithHealthAndSafety = needHelpWithHealthAndSafety;
+    }
 
-	public void setIndustry(String industry) {
-		this.industry = industry;
-	}
+    public Boolean getNeedToCarryOverVacation() {
+        return needToCarryOverVacation;
+    }
 
+    public void setNeedToCarryOverVacation(Boolean needToCarryOverVacation) {
+        this.needToCarryOverVacation = needToCarryOverVacation;
+    }
 }
