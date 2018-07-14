@@ -4,13 +4,8 @@ import com.eclipseeio.emi.dto.CompanyDTO;
 import com.eclipseeio.emi.model.*;
 import com.eclipseeio.emi.model.response.CompanyResponeFactory;
 import com.eclipseeio.emi.model.response.CompanyResponse;
-import com.eclipseeio.emi.model.response.UserResponse;
 import com.eclipseeio.emi.model.specifications.CompanySpecification;
-import com.eclipseeio.emi.model.specifications.UserSpecification;
-import com.eclipseeio.emi.repository.CompanyRepository;
-import com.eclipseeio.emi.repository.IndustryRepository;
-import com.eclipseeio.emi.repository.OrganizationsRepository;
-import com.eclipseeio.emi.repository.UserRepository;
+import com.eclipseeio.emi.repository.*;
 import com.eclipseeio.emi.service.MessageResource;
 import com.eclipseeio.emi.service.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,106 +24,239 @@ import java.util.Map;
 @RequestMapping(value = "/api/")
 public class CompanyController {
 
-	@Autowired
-	private CompanyRepository companyRepository;
+    @Autowired
+    private CompanyRepository companyRepository;
 
-	@Autowired
-	private OrganizationsRepository organizationsRepository;
+    @Autowired
+    private OrganizationsRepository organizationsRepository;
 
-	@Autowired
-	private IndustryRepository industryRepository;
+    @Autowired
+    private IndustryRepository industryRepository;
+
+    @Autowired
+    private StateRepository statesRepository;
+
+    @Autowired
+    private BenefitsRepository benefitsRepository;
+    @Autowired
+    private AssignToRepository assignToRepository;
+    @Autowired
+    private AdditionalRequirementsRepository additionalRequirementsRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @RequestMapping(method = RequestMethod.POST, value = "addCompany")
+    @PreAuthorize("hasAnyRole('HR','ADMIN')")
+    public Result createCompany(@RequestBody CompanyDTO companyDTO) {
+        Result result = Validator.validateCompany(companyDTO, companyRepository, organizationsRepository);
+        if (result.isSuccess()) {
+            try {
+                Company company = new Company();
+                company.setCompanyName(companyDTO.getCompanyName());
+                company.setEmail(companyDTO.getEmail());
+                company.setAddress(companyDTO.getAddress());
+                company.setContactName(companyDTO.getContactName());
+                company.setFax(companyDTO.getFax());
+                company.setHealthAndSafetyInspection(companyDTO.getHealthAndSafetyInspection());
+                company.setNeedToCarryOverVacation(companyDTO.getNeedToCarryOverVacation());
+                Organizations organizations = organizationsRepository.findByOrganizationName(companyDTO.getCompanyName());
+                if (organizations != null) {
+                    company.setOrganizations(organizations);
+                } else {
+                    result.setMessage("Please provide a valid organization does not exist");
+                    return result;
+                }
+                Industry industry = industryRepository.findByIndustryName(companyDTO.getIndustry());
+                if (industry != null) {
+                    company.setIndustry(industry);
+                } else {
+                    result.setMessage("Please provide a valid Industry does not exist");
+                    return result;
+                }
+                States states = statesRepository.findById(Long.parseLong(companyDTO.getState()));
+                if (states != null) {
+                    company.setStates(states);
+                } else {
+                    result.setMessage("Please provide a valid State name & it  does not exist");
+                    return result;
+                }
+
+                Benefits benefits = benefitsRepository.findById(Long.parseLong(companyDTO.getBenfites()));
+                if (states != null) {
+                    company.setBenefits(benefits);
+                } else {
+                    result.setMessage("Please provide a valid benefits name & it  does not exist");
+                    return result;
+                }
 
 
-	@Autowired
-	private UserRepository userRepository;
+                AssignTo assignTo = assignToRepository.findById(Long.parseLong(companyDTO.getAssignTo()));
+                if (states != null) {
+                    company.setAssignTo(assignTo);
+                } else {
+                    result.setMessage("Please provide a valid Assign name & it  does not exist");
+                    return result;
+                }
 
-	@RequestMapping(method = RequestMethod.POST, value = "addCompany")
-	@PreAuthorize("hasAnyRole('HR','ADMIN')")
-	public Result createCompany(CompanyDTO companyDTO) {
-		Result result = Validator.validateCompany(companyDTO, companyRepository, organizationsRepository);
-		if (result.isSuccess()) {
-			try {
-				Company company = new Company();
-				company.setCompanyName(companyDTO.getCompanyName());
-				company.setEmail(companyDTO.getEmail());
-				company.setAddress(companyDTO.getAddress());
-				company.setContactName(companyDTO.getContactName());
-				company.setFax(companyDTO.getFax());
-				company.setHealthAndSafetyInspection(companyDTO.getHealthAndSafetyInspection());
-				company.setNeedToCarryOverVacation(companyDTO.getNeedToCarryOverVacation());
-				Organizations organizations=organizationsRepository.findByOrganizationName(companyDTO.getCompanyName());
-				if (organizations != null){ company.setOrganizations(organizations);}
-				else{
-					result.setMessage("Please provide a valid organization does not exist");
-					return result;
-				}
-				Industry industry = industryRepository.findByIndustryName(companyDTO.getIndustry());
-				if (industry != null){ company.setIndustry(industry);}
-				else{
-					result.setMessage("Please provide a valid Industry does not exist");
-					return result;
-				}
-				companyRepository.save(company);
-				result.setSuccess(true);
-				result.setMessage(MessageResource.MESSAGE_CREATE);
-			} catch (Exception e) {
-				result.setSuccess(false);
-				result.setMessage(e.getMessage());
-			}
-		}
-		return result;
-	}
+                AdditionalRequirements additionalRequirements = additionalRequirementsRepository.findByAdditionalRequirementsName(companyDTO.getAdditionalRequirements());
+                if (states != null) {
+                    company.setAdditionalRequirements(additionalRequirements);
+                } else {
+                    result.setMessage("Please provide a valid Additional Requirements name & it  does not exist");
+                    return result;
+                }
+                companyRepository.save(company);
+                result.setSuccess(true);
+                result.setMessage(MessageResource.MESSAGE_CREATE);
+            } catch (Exception e) {
+                result.setSuccess(false);
+                result.setMessage(e.getMessage());
+            }
+        }
+        return result;
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "updateCompany/{id}")
+    @PreAuthorize("hasAnyRole('HR','ADMIN')")
+    public Result updateCompany(@RequestBody CompanyDTO companyDTO, @PathVariable Long id) {
+        Result result = Validator.validateCompany(companyDTO, companyRepository, organizationsRepository);
+        if (result.isSuccess()) {
+            try {
+                Company company = companyRepository.findById(id);
+                if (company != null) {
+                    if (!company.getCompanyName().equalsIgnoreCase(companyDTO.getCompanyName())) {
+                        company.setCompanyName(companyDTO.getCompanyName());
+                    }
+                    if (!company.getEmail().equalsIgnoreCase(companyDTO.getCompanyName())) {
+                        company.setEmail(companyDTO.getEmail());
+                    }
+                    if (!company.getAddress().equalsIgnoreCase(companyDTO.getCompanyName())) {
+                        company.setAddress(companyDTO.getAddress());
+                    }
+                    if (company.getContactName().equalsIgnoreCase(companyDTO.getCompanyName())) {
+                        company.setContactName(companyDTO.getContactName());
+                    }
+                    if (company.getFax().toString().equalsIgnoreCase(companyDTO.getCompanyName())) {
+                        company.setFax(companyDTO.getFax());
+                    }
+                    if (company.getHealthAndSafetyInspection().equalsIgnoreCase(companyDTO.getCompanyName())) {
+                        company.setHealthAndSafetyInspection(company.getNeedHelpWithHealthAndSafety());
+                    }
+                    if (company.getNeedToCarryOverVacation().toString().equalsIgnoreCase(companyDTO.getCompanyName())) {
+                        company.setNeedToCarryOverVacation(companyDTO.getNeedToCarryOverVacation());
+                    }
+                    Organizations organizations = organizationsRepository.findByOrganizationName(companyDTO.getCompanyName());
+                    if (organizations != null) {
+                        company.setOrganizations(organizations);
+                    } else {
+                        result.setMessage("Please provide a valid organization does not exist");
+                        return result;
+                    }
+                    Industry industry = industryRepository.findByIndustryName(companyDTO.getIndustry());
+                    if (industry != null) {
+                        company.setIndustry(industry);
+                    } else {
+                        result.setMessage("Please provide a valid Industry does not exist");
+                        return result;
+                    }
+                    States states = statesRepository.findByStateName(companyDTO.getState());
+                    if (states != null) {
+                        company.setStates(states);
+                    } else {
+                        result.setMessage("Please provide a valid State name & it  does not exist");
+                        return result;
+                    }
+
+                    Benefits benefits = benefitsRepository.findByBenefitsName(companyDTO.getBenfites());
+                    if (states != null) {
+                        company.setBenefits(benefits);
+                    } else {
+                        result.setMessage("Please provide a valid benefits name & it  does not exist");
+                        return result;
+                    }
 
 
+                    AssignTo assignTo = assignToRepository.findByAssignName(companyDTO.getAssignTo());
+                    if (states != null) {
+                        company.setAssignTo(assignTo);
+                    } else {
+                        result.setMessage("Please provide a valid Assign name & it  does not exist");
+                        return result;
+                    }
+
+                    AdditionalRequirements additionalRequirements = additionalRequirementsRepository.findByAdditionalRequirementsName(companyDTO.getAdditionalRequirements());
+                    if (states != null) {
+                        company.setAdditionalRequirements(additionalRequirements);
+                    } else {
+                        result.setMessage("Please provide a valid Additional Requirements name & it  does not exist");
+                        return result;
+                    }
+                    companyRepository.save(company);
+                    result.setSuccess(true);
+                    result.setMessage(MessageResource.MESSAGE_CREATE);
+                } else {
+                    result.setMessage("No Company Found");
+                    return result;
+                }
+            } catch (Exception e) {
+                result.setSuccess(false);
+                result.setMessage(e.getMessage());
+            }
+        }
+        return result;
+    }
 
 
-	@RequestMapping(value = "deleteCompany/{id}", method = RequestMethod.DELETE)
-	public Result delete(@PathVariable Long id) {
-		Result result = new Result();
-		result.setSuccess(true);
-		try {
-			Company company = companyRepository.findById(id);
-			if (company != null) {
-				//com
-				result.setMessage(MessageResource.MESSAGE_DELETE);
-				companyRepository.delete(company);
-			} else {
-				result.setSuccess(false);
-				result.setMessage(MessageResource.MESSAGE_ADMIN_DELETE);
-			}
-		} catch (Exception e) {
-			result.setMessage(e.getMessage());
-			result.setSuccess(false);
-		}
-		return result;
-	}
+    @RequestMapping(value = "deleteCompany/{id}", method = RequestMethod.DELETE)
+    public Result delete(@PathVariable Long id) {
+        Result result = new Result();
+        result.setSuccess(true);
+        try {
+            Company company = companyRepository.findById(id);
+            if (company != null) {
 
-	@RequestMapping(value = "company", method = RequestMethod.GET)
-	public Result users(@Param("pageable")Pageable pageable, @RequestParam Map<String, String> queryParameters) {
-		Result result = new Result();
-		try {
-			if (pageable == null)
-				pageable = new PageRequest(0, 10);
+                result.setMessage(MessageResource.MESSAGE_DELETE);
+                companyRepository.delete(company);
+            } else {
+                result.setSuccess(false);
+                result.setMessage(MessageResource.MESSAGE_ADMIN_DELETE);
+            }
+        } catch (Exception e) {
+            result.setMessage(e.getMessage());
+            result.setSuccess(false);
+        }
+        return result;
+    }
 
-			String query = queryParameters.get("query");
-			Page<Company> page;
-			if (query != null && query.trim().length() > 0) {
-				page = companyRepository.findAll(new CompanySpecification(query), pageable);
-			} else {
-				page = companyRepository.findAll(pageable);
-			}
-			List<CompanyResponse> jwtUsers = new ArrayList<>();
-			page.getContent().forEach(company -> jwtUsers.add(CompanyResponeFactory.create(company)));
-			com.eclipseeio.emi.model.Page p = new com.eclipseeio.emi.model.Page();
-			p.setTotalElements(page.getTotalElements());
-			p.setNumberOfElements(page.getNumberOfElements());
-			p.setTotalPages(page.getTotalPages());
-			result.setPage(p);
-			result.setCompanys(jwtUsers);
-			result.setSuccess(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
+    @RequestMapping(value = "company", method = RequestMethod.GET)
+    public Result users(@Param("pageable") Pageable pageable, @RequestParam Map<String, String> queryParameters) {
+        Result result = new Result();
+        try {
+            if (pageable == null)
+                pageable = new PageRequest(0, 10);
+
+            String query = queryParameters.get("query");
+            Page<Company> page;
+            if (query != null && query.trim().length() > 0) {
+                page = companyRepository.findAll(new CompanySpecification(query), pageable);
+            } else {
+                page = companyRepository.findAll(pageable);
+            }
+            List<CompanyResponse> jwtUsers = new ArrayList<>();
+            page.getContent().forEach(company -> jwtUsers.add(CompanyResponeFactory.create(company)));
+            com.eclipseeio.emi.model.Page p = new com.eclipseeio.emi.model.Page();
+            p.setTotalElements(page.getTotalElements());
+            p.setNumberOfElements(page.getNumberOfElements());
+            p.setTotalPages(page.getTotalPages());
+            result.setPage(p);
+            result.setCompanys(jwtUsers);
+            result.setSuccess(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
 }

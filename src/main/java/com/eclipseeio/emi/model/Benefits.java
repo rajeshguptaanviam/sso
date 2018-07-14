@@ -26,6 +26,9 @@ public class Benefits {
     @NotNull
     private String BenefitsName;
 
+    @OneToOne(cascade=CascadeType.ALL)
+    private Company company;
+
     @CreationTimestamp
     @Column(name = "created_at")
     private Date createdAt;
@@ -66,4 +69,12 @@ public class Benefits {
         this.updatedAt = updatedAt;
     }
 
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
 }

@@ -64,8 +64,15 @@ public class Company implements Serializable {
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private States states;
-	
-	 @ManyToOne(fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.ALL)
+	private AdditionalRequirements additionalRequirements;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	private Benefits benefits;
+	@OneToOne(cascade = CascadeType.ALL)
+	private AssignTo assignTo;
+
+	@ManyToOne(fetch = FetchType.EAGER)
 	 @JoinColumn(name = "organizations_id", referencedColumnName = "id")
 	private Organizations organizations;
 	 
@@ -257,5 +264,29 @@ public class Company implements Serializable {
 
 	public void setUsers(User users) {
 		this.users = users;
+	}
+
+	public Benefits getBenefits() {
+		return benefits;
+	}
+
+	public void setBenefits(Benefits benefits) {
+		this.benefits = benefits;
+	}
+
+	public AssignTo getAssignTo() {
+		return assignTo;
+	}
+
+	public void setAssignTo(AssignTo assignTo) {
+		this.assignTo = assignTo;
+	}
+
+	public AdditionalRequirements getAdditionalRequirements() {
+		return additionalRequirements;
+	}
+
+	public void setAdditionalRequirements(AdditionalRequirements additionalRequirements) {
+		this.additionalRequirements = additionalRequirements;
 	}
 }

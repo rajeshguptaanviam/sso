@@ -7,5 +7,6 @@ import com.eclipseeio.emi.model.AssignTo;
 public interface AssignToRepository extends JpaRepository<AssignTo, Long> {
 
 	AssignTo findByAssignName(String assignToName);
+	AssignTo findById(Long assignToName);
 
 }

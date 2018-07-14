@@ -9,15 +9,10 @@ public class CompanyDTO {
 	private Long id;
 
 	private String companyName;
-
 	private String address;
-
 	private String city;
-
 	private String website;
-	
 	private String state;
-	
 	private String organizationName;
 	private String industry;
 	private String benfites;

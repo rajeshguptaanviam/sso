@@ -22,12 +22,13 @@ public class AdditionalRequirements {
 
     @Column(name = " AdditionalRequirements_name", unique = true)
     @NotNull
-    private String industryName;
+    private String additionalRequirementsName;
 
     @CreationTimestamp
     @Column(name = "created_at")
     private Date createdAt;
-
+    @OneToOne(cascade=CascadeType.ALL)
+    private Company company;
     @UpdateTimestamp
     @Column(name = "updated_at")
     private Date updatedAt;
@@ -41,12 +42,12 @@ public class AdditionalRequirements {
         this.id = id;
     }
 
-    public String getIndustryName() {
-        return industryName;
+    public String getAdditionalRequirementsName() {
+        return additionalRequirementsName;
     }
 
-    public void setIndustryName(String industryName) {
-        this.industryName = industryName;
+    public void setAdditionalRequirementsName(String additionalRequirementsName) {
+        this.additionalRequirementsName = additionalRequirementsName;
     }
 
     public Date getCreatedAt() {
@@ -65,5 +66,11 @@ public class AdditionalRequirements {
         this.updatedAt = updatedAt;
     }
 
+    public Company getCompany() {
+        return company;
+    }
 
+    public void setCompany(Company company) {
+        this.company = company;
+    }
 }
