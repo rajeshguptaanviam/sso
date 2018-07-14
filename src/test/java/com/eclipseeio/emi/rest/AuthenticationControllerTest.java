@@ -5,6 +5,7 @@ import com.eclipseeio.emi.common.TimeProvider;
 import com.eclipseeio.emi.model.Authority;
 import com.eclipseeio.emi.model.User;
 import com.eclipseeio.emi.model.UserRoleName;
+import com.eclipseeio.emi.model.response.UserResponseFactory;
 import com.eclipseeio.emi.security.DeviceDummy;
 import com.eclipseeio.emi.security.TokenHelper;
 import com.eclipseeio.emi.service.impl.CustomUserDetailsService;
@@ -86,7 +87,7 @@ public class AuthenticationControllerTest {
         List<Authority> authorities = Arrays.asList(authority);
         user.setAuthorities(authorities);
         user.setLastPasswordResetDate(new Timestamp(DateUtil.yesterday().getTime()));
-        when(this.userDetailsService.loadUserByUsername(eq("testUser"))).thenReturn(user);
+        when(this.userDetailsService.loadUserByUsername(eq("testUser"))).thenReturn(UserResponseFactory.create(user));
         MockitoAnnotations.initMocks(this);
 
         ReflectionTestUtils.setField(tokenHelper, "EXPIRES_IN", 100); // 100 sec

@@ -1,21 +1,8 @@
 package com.eclipseeio.emi.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 /**
  * Created by fan.jin on 2016-10-15.
@@ -74,6 +61,7 @@ public class Company implements Serializable {
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private Industry industry;
+
 	@OneToOne(cascade = CascadeType.ALL)
 	private States states;
 	
@@ -85,11 +73,12 @@ public class Company implements Serializable {
 	 private List<CompanyDepartment> companyDepartment;
 
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "id")
-	private List<User> users;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	private User users;
 
 
-  /*  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "id")
+ 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "id")
     private List<CallDetail> callDetail;
 
 
@@ -99,15 +88,8 @@ public class Company implements Serializable {
 
     public void setCallDetail(List<CallDetail> callDetail) {
         this.callDetail = callDetail;
-    }*/
+    }
 
-    public List<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(List<User> users) {
-		this.users = users;
-	}
 
 	public Long getId() {
 		return id;
@@ -268,6 +250,12 @@ public class Company implements Serializable {
 	public void setStates(States states) {
 		this.states = states;
 	}
-	
 
+	public User getUsers() {
+		return users;
+	}
+
+	public void setUsers(User users) {
+		this.users = users;
+	}
 }

@@ -1,5 +1,7 @@
 package com.eclipseeio.emi.model;
 
+import com.eclipseeio.emi.model.response.CompanyResponse;
+import com.eclipseeio.emi.model.response.UserResponse;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
@@ -12,10 +14,12 @@ public class Result {
     private Page page;
 
     private List<Authority> authorities;
-private  List<Industry> industries;
-    private  Industry industry;
+    private List<Industry> industries;
+    private Industry industry;
     private Map<String, Long> countSet;
     private String message;
+    private List<UserResponse> users;
+    private List<CompanyResponse> companys;
 
 
     public Page getPage() {
@@ -59,6 +63,7 @@ private  List<Industry> industries;
         this.success = success;
     }
 
+
     public List<Industry> getIndustries() {
         return industries;
     }
@@ -73,5 +78,22 @@ private  List<Industry> industries;
 
     public void setIndustry(Industry industry) {
         this.industry = industry;
+    }
+
+    public void setUsers(List<UserResponse> users) {
+        this.users = users;
+    }
+
+    public List<CompanyResponse> getCompanys() {
+        return companys;
+    }
+
+    public void setCompanys(List<CompanyResponse> companys) {
+        this.companys = companys;
+
+    }
+
+    public List<UserResponse> getUsers() {
+        return users;
     }
 }

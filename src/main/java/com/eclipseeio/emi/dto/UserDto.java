@@ -17,6 +17,7 @@ public class UserDto {
     private Date createdAt;
     private Date updatedAt;
     private List<Authority> authorities;
+    private Long roleId;
 
 
     public UserDto() {
@@ -146,5 +147,13 @@ public class UserDto {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 }

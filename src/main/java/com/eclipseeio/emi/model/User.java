@@ -117,9 +117,14 @@ public class User implements UserDetails {
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.authorities;
+    public List<Authority> getAuthorities() {
+        return authorities;
     }
+
+
+    /*public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.authorities;
+    }*/
 
     public String getEmail() {
         return email;
@@ -172,7 +177,11 @@ public class User implements UserDetails {
         return true;
     }
 
+    public List<CallDetail> getCallDetail() {
+        return callDetail;
+    }
 
-
-
+    public void setCallDetail(List<CallDetail> callDetail) {
+        this.callDetail = callDetail;
+    }
 }

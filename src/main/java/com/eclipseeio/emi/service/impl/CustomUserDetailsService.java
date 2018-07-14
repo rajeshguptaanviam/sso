@@ -1,6 +1,7 @@
 package com.eclipseeio.emi.service.impl;
 
 import com.eclipseeio.emi.model.User;
+import com.eclipseeio.emi.model.response.UserResponseFactory;
 import com.eclipseeio.emi.repository.UserRepository;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -39,7 +40,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
         } else {
-            return user;
+            return UserResponseFactory.create(user);
         }
     }
 

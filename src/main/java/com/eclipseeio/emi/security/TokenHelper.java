@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class TokenHelper {
@@ -31,6 +33,8 @@ public class TokenHelper {
 
     @Value("${jwt.header}")
     private String AUTH_HEADER;
+
+
 
     static final String AUDIENCE_UNKNOWN = "unknown";
     static final String AUDIENCE_WEB = "web";
@@ -168,6 +172,27 @@ public class TokenHelper {
 
     public String getAuthHeaderFromHeader( HttpServletRequest request ) {
         return request.getHeader(AUTH_HEADER);
+    }
+    public String generateToken(UserDetails userDetails) {
+        Map<String, Object> claims = new HashMap<>();
+        return doGenerateToken(claims, userDetails.getUsername());
+    }
+
+
+    private String doGenerateToken(Map<String, Object> claims, String subject) {
+        final Date createdDate = timeProvider.now();;
+        final Date expirationDate = calculateExpirationDate(createdDate);
+
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(subject)
+                .setIssuedAt(createdDate)
+                .setExpiration(expirationDate)
+                .signWith(SignatureAlgorithm.HS512, SECRET)
+                .compact();
+    }
+    private Date calculateExpirationDate(Date createdDate) {
+        return new Date(createdDate.getTime() + EXPIRES_IN * 1000);
     }
 
 }
