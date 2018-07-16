@@ -22,8 +22,12 @@ public class Result {
     private List<CompanyResponse> companys;
     private List<Benefits> benefits;
     private Benefits _benefits;
-
-
+    private List<States> states;
+    private States _states;
+    private AdditionalRequirements additionalRequirements;
+    private List<AdditionalRequirements> additionalRequirementsList;
+    private AssignTo assignTo;
+    private List<AssignTo> assignToList;
 
 
     public Page getPage() {
@@ -115,5 +119,55 @@ public class Result {
 
     public void set_benefits(Benefits _benefits) {
         this._benefits = _benefits;
+    }
+
+    public List<States> getStates() {
+        return states;
+    }
+
+    public void setStates(List<States> states) {
+        this.states = states;
+    }
+
+    public States get_states() {
+        return _states;
+    }
+
+    public void set_states(States _states) {
+        this._states = _states;
+    }
+
+
+    public AdditionalRequirements getAdditionalRequirements() {
+        return additionalRequirements;
+    }
+
+    public void setAdditionalRequirements(AdditionalRequirements additionalRequirements) {
+        this.additionalRequirements = additionalRequirements;
+    }
+
+    public List<AdditionalRequirements> getAdditionalRequirementsList() {
+        return additionalRequirementsList;
+    }
+
+    public void setAdditionalRequirementsList(List<AdditionalRequirements> additionalRequirementsList) {
+        this.additionalRequirementsList = additionalRequirementsList;
+    }
+
+
+    public AssignTo getAssignTo() {
+        return assignTo;
+    }
+
+    public void setAssignTo(AssignTo assignTo) {
+        this.assignTo = assignTo;
+    }
+
+    public List<AssignTo> getAssignToList() {
+        return assignToList;
+    }
+
+    public void setAssignToList(List<AssignTo> assignToList) {
+        this.assignToList = assignToList;
     }
 }

@@ -44,12 +44,14 @@ public class IndustryController {
         Result result = new Result();
         try {
             Industry industry=industryRepository.findByIdAndActive(id,true);
-            if(industry.getActive().equals(true)) {
-                industry.setActive(false);
-                industryRepository.save(industry);
-            }else {
-                result.setSuccess(true);
-                result.setMessage(MessageResource.MESSAGE_DELETE);
+            if(industry != null) {
+                if (industry.getActive().equals(true)) {
+                    industry.setActive(false);
+                    industryRepository.save(industry);
+                } else {
+                    result.setSuccess(true);
+                    result.setMessage(MessageResource.MESSAGE_DELETE);
+                }
             }
         } catch (Exception e) {
 

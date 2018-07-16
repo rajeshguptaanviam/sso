@@ -34,6 +34,10 @@ public class AdditionalRequirements {
     private Date updatedAt;
 
 
+    @Column(name = "active")
+    private Boolean active;
+
+
     public Long getId() {
         return id;
     }
@@ -72,5 +76,13 @@ public class AdditionalRequirements {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }

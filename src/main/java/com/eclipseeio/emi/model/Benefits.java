@@ -28,6 +28,7 @@ public class Benefits {
 
     @OneToOne(cascade=CascadeType.ALL)
     private Company company;
+
     @Column(name = "active")
     private Boolean active;
 

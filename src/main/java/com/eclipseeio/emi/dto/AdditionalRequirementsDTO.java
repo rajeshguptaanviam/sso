@@ -1,39 +1,18 @@
-package com.eclipseeio.emi.model;
+package com.eclipseeio.emi.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.eclipseeio.emi.model.Company;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.List;
 
+public class AdditionalRequirementsDTO {
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@Entity
-@Table(name = "Assign_To")
-public class AssignTo {
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-
-
-    @Column(name = "AssignTo_name", unique = true)
-    @NotNull
-    private String assignName;
-
-    @CreationTimestamp
-    @Column(name = "created_at")
+    private String additionalRequirementsName;
     private Date createdAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_at")
+    private Company company;
     private Date updatedAt;
-
-    @Column(name = "active")
     private Boolean active;
 
 
@@ -45,12 +24,12 @@ public class AssignTo {
         this.id = id;
     }
 
-    public String getAssignName() {
-        return assignName;
+    public String getAdditionalRequirementsName() {
+        return additionalRequirementsName;
     }
 
-    public void setAssignName(String assignName) {
-        this.assignName = assignName;
+    public void setAdditionalRequirementsName(String additionalRequirementsName) {
+        this.additionalRequirementsName = additionalRequirementsName;
     }
 
     public Date getCreatedAt() {
@@ -59,6 +38,14 @@ public class AssignTo {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     public Date getUpdatedAt() {
@@ -77,5 +64,6 @@ public class AssignTo {
     public void setActive(Boolean active) {
         this.active = active;
     }
+
 
 }

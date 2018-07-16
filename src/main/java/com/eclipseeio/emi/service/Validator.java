@@ -176,4 +176,55 @@ public class Validator {
 
 		return result; }
 
+
+
+
+	public static Result validateStates(StatesDTO statesDTO, StatesRepository statesRepository) {
+		Result result = new Result();
+		result.setSuccess(true);
+		if (statesDTO == null) {
+			result.setMessage("no input params found.");
+			result.setSuccess(false);
+		}
+		States states=statesRepository.findByStateName(statesDTO.getStateName());
+		if (states != null) {
+			result.setMessage("Please try another states name.It is already taken");
+			result.setSuccess(false);
+		}
+		return result; }
+
+
+	public static Result validateAdditionalRequirements(AdditionalRequirementsDTO additionalRequirementsDTO, AdditionalRequirementsRepository additionalRequirementsRepository) {
+		Result result = new Result();
+		result.setSuccess(true);
+		if (additionalRequirementsDTO == null) {
+			result.setMessage("no input params found.");
+			result.setSuccess(false);
+		}
+		AdditionalRequirements additionalRequirements=additionalRequirementsRepository.findByAdditionalRequirementsName(additionalRequirementsDTO.getAdditionalRequirementsName());
+		if (additionalRequirements != null) {
+			result.setMessage("Please try another Additional Requirements name.It is already taken");
+			result.setSuccess(false);
+		}
+		return result; }
+
+
+	public static Result validateAssignTo(AssignToDTO assignToDTO, AssignToRepository assignToRepository) {
+		Result result = new Result();
+		result.setSuccess(true);
+		if (assignToDTO == null) {
+			result.setMessage("no input params found.");
+			result.setSuccess(false);
+		}
+		AssignTo assignTo=assignToRepository.findByAssignName(assignToDTO.getAssignName());
+		if (assignTo != null) {
+			result.setMessage("Please try another AssignTo name.It is already taken");
+			result.setSuccess(false);
+		}
+		return result; }
+
+
+
+
+
 }

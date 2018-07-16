@@ -180,7 +180,7 @@ public class TokenHelper {
 
 
     private String doGenerateToken(Map<String, Object> claims, String subject) {
-        final Date createdDate = timeProvider.now();;
+        final Date createdDate = timeProvider.now();
         final Date expirationDate = calculateExpirationDate(createdDate);
 
         return Jwts.builder()

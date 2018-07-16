@@ -34,7 +34,7 @@ public class CompanyController {
     private IndustryRepository industryRepository;
 
     @Autowired
-    private StateRepository statesRepository;
+    private StatesRepository statesRepository;
 
     @Autowired
     private BenefitsRepository benefitsRepository;

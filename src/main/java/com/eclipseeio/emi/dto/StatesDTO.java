@@ -1,42 +1,25 @@
-package com.eclipseeio.emi.model;
+package com.eclipseeio.emi.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+public class StatesDTO {
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@Entity
-@Table(name = "States")
-public class States {
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @CreationTimestamp
-    @Column(name = "created_at")
     private Date createdAt;
 
-    @UpdateTimestamp
-    @Column(name = "updated_at")
     private Date updatedAt;
 
-    @Column(name = "state_name", unique = true)
-    @NotNull
     private String stateName;
 
-    @Column(name = "active")
     private Boolean active;
 
-    
-    @OneToOne(cascade=CascadeType.ALL)
-    private Company company;
+
     public Long getId() {
         return id;
     }
@@ -69,14 +52,6 @@ public class States {
         this.stateName = stateName;
     }
 
-	public Company getCompany() {
-		return company;
-	}
-
-	public void setCompany(Company company) {
-		this.company = company;
-	}
-
     public Boolean getActive() {
         return active;
     }
@@ -84,7 +59,4 @@ public class States {
     public void setActive(Boolean active) {
         this.active = active;
     }
-
-
-
 }

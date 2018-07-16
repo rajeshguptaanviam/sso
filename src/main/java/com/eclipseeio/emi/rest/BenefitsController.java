@@ -27,6 +27,7 @@ public class BenefitsController {
 
                 Benefits benefits=new Benefits();
                 benefits.setBenefitsName(benefitsDto.getBenefitsName());
+                benefits.setActive(true);
                 benefitsRepository.save(benefits);
                 result.setSuccess(true);
                 result.setMessage(MessageResource.MESSAGE_CREATE);
@@ -45,14 +46,15 @@ public class BenefitsController {
         Result result = new Result();
         try {
             Benefits benefits=benefitsRepository.findByIdAndActive(id,true);
-            if(benefits.getActive().equals(true)) {
-                benefits.setActive(false);
-                result.setMessage(MessageResource.MESSAGE_DELETE);
-                benefitsRepository.save(benefits);
-            }
-            else {
-                result.setSuccess(true);
-                result.setMessage(MessageResource.MESSAGE_DELETE);
+            if(benefits != null) {
+                if (benefits.getActive().equals(true)) {
+                    benefits.setActive(false);
+                    result.setMessage(MessageResource.MESSAGE_DELETE);
+                    benefitsRepository.save(benefits);
+                } else {
+                    result.setSuccess(true);
+                    result.setMessage(MessageResource.MESSAGE_DELETE);
+                }
             }
         } catch (Exception e) {
             result.setSuccess(false);
