@@ -20,6 +20,10 @@ public class Result {
     private String message;
     private List<UserResponse> users;
     private List<CompanyResponse> companys;
+    private List<Benefits> benefits;
+    private Benefits _benefits;
+
+
 
 
     public Page getPage() {
@@ -95,5 +99,21 @@ public class Result {
 
     public List<UserResponse> getUsers() {
         return users;
+    }
+
+    public List<Benefits> getBenefits() {
+        return benefits;
+    }
+
+    public void setBenefits(List<Benefits> benefits) {
+        this.benefits = benefits;
+    }
+
+    public Benefits get_benefits() {
+        return _benefits;
+    }
+
+    public void set_benefits(Benefits _benefits) {
+        this._benefits = _benefits;
     }
 }

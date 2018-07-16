@@ -28,6 +28,8 @@ public class Benefits {
 
     @OneToOne(cascade=CascadeType.ALL)
     private Company company;
+    @Column(name = "active")
+    private Boolean active;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -76,5 +78,13 @@ public class Benefits {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }

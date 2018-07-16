@@ -27,7 +27,6 @@ public class BenefitsController {
 
                 Benefits benefits=new Benefits();
                 benefits.setBenefitsName(benefitsDto.getBenefitsName());
-               benefits.setActive(true);
                 benefitsRepository.save(benefits);
                 result.setSuccess(true);
                 result.setMessage(MessageResource.MESSAGE_CREATE);
@@ -70,7 +69,7 @@ public class BenefitsController {
         Result result = new Result();
         try {
             List<Benefits> benefits = benefitsRepository.findAllByActive(true);
-            result.setBenefitsList(benefits);
+            result.setBenefits(benefits);
             result.setSuccess(true);
 
         } catch (Exception e) {
@@ -90,7 +89,7 @@ public class BenefitsController {
             Benefits benefits=benefitsRepository.findByIdAndActive(id,true);
 
             if(benefits!=null) {
-                result.setBenefits(benefits);
+                result.set_benefits(benefits);
                 result.setSuccess(true);
             }
             else
@@ -108,7 +107,7 @@ public class BenefitsController {
 
 
 
-    @RequestMapping(method = RequestMethod.PUT, value = "updateIndustry/{id}")
+    @RequestMapping(method = RequestMethod.PUT, value = "updateBenifites/{id}")
     public Result updateBenefits(@PathVariable Long id, @RequestBody BenefitsDto benefitsDto) {
 
         Result result = new Result();
