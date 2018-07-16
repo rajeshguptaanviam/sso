@@ -89,4 +89,6 @@ INSERT INTO call_topic(id,call_topic_name,created_at,updated_at) VALUES (9,'Sick
 INSERT INTO call_topic(id,call_topic_name,created_at,updated_at) VALUES (10,'Termination',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 INSERT INTO call_topic(id,call_topic_name,created_at,updated_at) VALUES (11,'Training',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
-
+INSERT INTO organizations (id,organization_name,created_at,updated_at,created_by) VALUES (3,'VANS OFF THE WALL',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'CALIFORNIA');
+INSERT INTO organizations (id,organization_name,created_at,updated_at,created_by) VALUES (2,'HELLO JAVA',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'HELLO JAVA');
+INSERT INTO organizations (id,organization_name,created_at,updated_at,created_by) VALUES (1,'DONUT',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'SACHIN');

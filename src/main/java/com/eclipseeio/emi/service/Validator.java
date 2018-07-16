@@ -1,9 +1,6 @@
 package com.eclipseeio.emi.service;
 
-import com.eclipseeio.emi.dto.CompanyDTO;
-import com.eclipseeio.emi.dto.IndustryDto;
-import com.eclipseeio.emi.dto.OrganizationDTO;
-import com.eclipseeio.emi.dto.UserDto;
+import com.eclipseeio.emi.dto.*;
 import com.eclipseeio.emi.model.*;
 import com.eclipseeio.emi.repository.*;
 
@@ -160,4 +157,23 @@ public class Validator {
 
 		return result;
 	}
+
+
+	public static Result validateBenefits(BenefitsDto benefitsDto, BenefitsRepository benefitsRepository) {
+		Result result = new Result();
+		result.setSuccess(true);
+		if (benefitsDto == null) {
+			result.setMessage("no input params found.");
+			result.setSuccess(false);
+		}
+
+		Benefits benefits=benefitsRepository.findByBenefitsName(benefitsDto.getBenefitsName());
+
+		if (benefits != null) {
+			result.setMessage("Please try another benefits name.It is already taken");
+			result.setSuccess(false);
+		}
+
+		return result; }
+
 }

@@ -24,8 +24,6 @@ public class Organizations {
 
 
     @Column(name = "created_by")
-    @NotNull
-
     private String createdBy;
 
 
