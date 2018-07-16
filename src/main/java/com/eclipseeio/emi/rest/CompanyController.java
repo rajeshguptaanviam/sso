@@ -50,10 +50,10 @@ public class CompanyController {
     @PreAuthorize("hasAnyRole('HR','ADMIN')")
     public Result createCompany(@RequestBody CompanyDTO companyDTO) {
         Result result = Validator.validateCompany(companyDTO, companyRepository, organizationsRepository);
+        User user_=userRepository.findById(Long.parseLong(companyDTO.getUserId()));
         if (result.isSuccess()) {
             try {
                 Company company = new Company();
-
                 company.setCompanyName(companyDTO.getCompanyName());
                 company.setEmail(companyDTO.getEmail());
                 company.setAddress(companyDTO.getAddress());
@@ -68,6 +68,10 @@ public class CompanyController {
                 company.setWSIBRateGroupNo(companyDTO.getwSIBRateGroupNo());
                // company.setUsers();
                 Organizations organizations = organizationsRepository.findById(Long.parseLong(companyDTO.getOrganizationName()));
+
+                if(user_!=null){
+                    company.setUsers(user_);
+                }
                 if (organizations != null) {
                     company.setOrganizations(organizations);
                 } else {

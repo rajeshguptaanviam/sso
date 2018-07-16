@@ -7,7 +7,7 @@ package com.eclipseeio.emi.dto;
 public class CompanyDTO {
 
     private Long id;
-
+    private String userId;
     private String companyName;
     private String address;
     private String city;
@@ -205,5 +205,13 @@ public class CompanyDTO {
 
     public void setNeedToCarryOverVacation(Boolean needToCarryOverVacation) {
         this.needToCarryOverVacation = needToCarryOverVacation;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

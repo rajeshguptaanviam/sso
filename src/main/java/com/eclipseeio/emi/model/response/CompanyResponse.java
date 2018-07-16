@@ -29,7 +29,7 @@ public class CompanyResponse implements Serializable {
     private OrganizationResponse organizations;
     private AdditionalRequementResponse additionalRequirements;
     //  private List<CompanyDepartment> companyDepartment;
-//  private UserResponse users;
+  private UserResponse users;
     //  private List<CallDetail> callDetail;
     private final Date createdAt;
     private final Date updatedAt;
@@ -56,7 +56,7 @@ public class CompanyResponse implements Serializable {
         this.states = StatesResponeFactory.create(enquiry.getStates());
         this.industry = IndustryResponeFactory.create(enquiry.getIndustry());
         this.additionalRequirements = AdditionalRequrmentResponeFactory.create(enquiry.getAdditionalRequirements());
-        //this.users = UserResponseFactory.create(enquiry.getUsers());
+        this.users = UserResponseFactory.create(enquiry.getUsers());
 
         this.createdAt = enquiry.getCreatedAt();
         this.updatedAt = enquiry.getUpdatedAt();
@@ -222,12 +222,12 @@ public class CompanyResponse implements Serializable {
         return updatedAt;
     }
 
-    /*public UserResponse getUsers() {
+    public UserResponse getUsers() {
         return users;
     }
 
     public void setUsers(UserResponse users) {
         this.users = users;
     }
-*/
+
 }
