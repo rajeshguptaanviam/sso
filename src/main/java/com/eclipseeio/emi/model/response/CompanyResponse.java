@@ -28,13 +28,13 @@ public class CompanyResponse implements Serializable {
     private StatesResponse states;
     private OrganizationResponse organizations;
     private AdditionalRequementResponse additionalRequirements;
-  //  private List<CompanyDepartment> companyDepartment;
-  private UserResponse users;
-  //  private List<CallDetail> callDetail;
+    //  private List<CompanyDepartment> companyDepartment;
+//  private UserResponse users;
+    //  private List<CallDetail> callDetail;
     private final Date createdAt;
     private final Date updatedAt;
-  //  private final UserResponse user;
-   // private final JwtProject project;
+    //  private final UserResponse user;
+    // private final JwtProject project;
 
 
     public CompanyResponse(Company enquiry) {
@@ -44,22 +44,22 @@ public class CompanyResponse implements Serializable {
         this.city = enquiry.getCity();
         this.companyName = enquiry.getCompanyName();
         this.contactName = enquiry.getContactName();
-        this.fax=enquiry.getFax();
+        this.fax = enquiry.getFax();
         this.HealthAndSafetyInspection = enquiry.getHealthAndSafetyInspection();
-        this.NeedHelpWithHealthAndSafety= enquiry.getNeedHelpWithHealthAndSafety();
-        this.phone =enquiry.getPhone();
+        this.NeedHelpWithHealthAndSafety = enquiry.getNeedHelpWithHealthAndSafety();
+        this.phone = enquiry.getPhone();
         this.RequireJHSCMeeting = enquiry.getRequireJHSCMeeting();
-        this.website= enquiry.getWebsite();
+        this.website = enquiry.getWebsite();
         this.WSIBFirmNo = enquiry.getWSIBFirmNo();
-        this.WSIBRateGroupNo =enquiry.getWSIBRateGroupNo();
+        this.WSIBRateGroupNo = enquiry.getWSIBRateGroupNo();
         this.organizations = OrganizationsResponeFactory.create(enquiry.getOrganizations());
         this.states = StatesResponeFactory.create(enquiry.getStates());
         this.industry = IndustryResponeFactory.create(enquiry.getIndustry());
         this.additionalRequirements = AdditionalRequrmentResponeFactory.create(enquiry.getAdditionalRequirements());
-        this.users = UserResponseFactory.create(enquiry.getUsers());
+        //this.users = UserResponseFactory.create(enquiry.getUsers());
 
         this.createdAt = enquiry.getCreatedAt();
-       this.updatedAt = enquiry.getUpdatedAt();
+        this.updatedAt = enquiry.getUpdatedAt();
     }
 
     public Long getId() {
@@ -222,11 +222,12 @@ public class CompanyResponse implements Serializable {
         return updatedAt;
     }
 
-    public UserResponse getUsers() {
+    /*public UserResponse getUsers() {
         return users;
     }
 
     public void setUsers(UserResponse users) {
         this.users = users;
     }
+*/
 }
