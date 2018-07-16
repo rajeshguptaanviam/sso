@@ -38,7 +38,6 @@ public class UserResponse implements UserDetails, Serializable {
     ) {
         this.id = id;
         this.username = username;
-
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;

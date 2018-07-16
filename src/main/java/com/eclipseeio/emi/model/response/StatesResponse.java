@@ -13,14 +13,14 @@ public class StatesResponse implements Serializable {
     private Long id;
     private String additionalRequirementsName;
     private Date createdAt;
-    private CompanyResponse company;
+  //  private CompanyResponse company;
     private Date updatedAt;
 
     public StatesResponse(States additionalRequirements) {
         this.id = additionalRequirements.getId();
         this.additionalRequirementsName = additionalRequirements.getStateName();
         this.createdAt = additionalRequirements.getCreatedAt();
-        this.company = CompanyResponeFactory.create(additionalRequirements.getCompany());
+       // this.company = CompanyResponeFactory.create(additionalRequirements.getCompany());
         this.updatedAt = additionalRequirements.getUpdatedAt();
     }
 
@@ -48,13 +48,13 @@ public class StatesResponse implements Serializable {
         this.createdAt = createdAt;
     }
 
-    public CompanyResponse getCompany() {
+  /*  public CompanyResponse getCompany() {
         return company;
     }
 
     public void setCompany(CompanyResponse company) {
         this.company = company;
-    }
+    }*/
 
     public Date getUpdatedAt() {
         return updatedAt;

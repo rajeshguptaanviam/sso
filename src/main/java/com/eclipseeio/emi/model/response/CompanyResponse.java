@@ -4,6 +4,7 @@ import com.eclipseeio.emi.model.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -23,14 +24,15 @@ public class CompanyResponse implements Serializable {
     private String RequireJHSCMeeting;
     private String NeedHelpWithHealthAndSafety;
     private Boolean NeedToCarryOverVacation;
- //   private Industry industry;
-  //  private States states;
-  //  private Organizations organizations;
+    private IndustryResponse industry;
+    private StatesResponse states;
+    private OrganizationResponse organizations;
+    private AdditionalRequementResponse additionalRequirements;
   //  private List<CompanyDepartment> companyDepartment;
-   // private User users;
+  private UserResponse users;
   //  private List<CallDetail> callDetail;
-    private final Integer createdOn;
-    private final String modifiedOn;
+    private final Date createdAt;
+    private final Date updatedAt;
   //  private final UserResponse user;
    // private final JwtProject project;
 
@@ -42,16 +44,22 @@ public class CompanyResponse implements Serializable {
         this.city = enquiry.getCity();
         this.companyName = enquiry.getCompanyName();
         this.contactName = enquiry.getContactName();
-        this.createdOn=enquiry.getFax();
-        this.modifiedOn = enquiry.getHealthAndSafetyInspection();
+        this.fax=enquiry.getFax();
+        this.HealthAndSafetyInspection = enquiry.getHealthAndSafetyInspection();
         this.NeedHelpWithHealthAndSafety= enquiry.getNeedHelpWithHealthAndSafety();
         this.phone =enquiry.getPhone();
         this.RequireJHSCMeeting = enquiry.getRequireJHSCMeeting();
         this.website= enquiry.getWebsite();
         this.WSIBFirmNo = enquiry.getWSIBFirmNo();
         this.WSIBRateGroupNo =enquiry.getWSIBRateGroupNo();
-        //this.user = UserResponseFactory.create(enquiry.getUsers());
-      //  this.project = JwtProjectFactory.create(enquiry.getProject());
+        this.organizations = OrganizationsResponeFactory.create(enquiry.getOrganizations());
+        this.states = StatesResponeFactory.create(enquiry.getStates());
+        this.industry = IndustryResponeFactory.create(enquiry.getIndustry());
+        this.additionalRequirements = AdditionalRequrmentResponeFactory.create(enquiry.getAdditionalRequirements());
+        this.users = UserResponseFactory.create(enquiry.getUsers());
+
+        this.createdAt = enquiry.getCreatedAt();
+       this.updatedAt = enquiry.getUpdatedAt();
     }
 
     public Long getId() {
@@ -174,67 +182,51 @@ public class CompanyResponse implements Serializable {
         NeedToCarryOverVacation = needToCarryOverVacation;
     }
 
-   /* public Industry getIndustry() {
+    public IndustryResponse getIndustry() {
         return industry;
     }
 
-    public void setIndustry(Industry industry) {
+    public void setIndustry(IndustryResponse industry) {
         this.industry = industry;
     }
 
-    public States getStates() {
+    public StatesResponse getStates() {
         return states;
     }
 
-    public void setStates(States states) {
+    public void setStates(StatesResponse states) {
         this.states = states;
     }
 
-    public Organizations getOrganizations() {
+    public OrganizationResponse getOrganizations() {
         return organizations;
     }
 
-    public void setOrganizations(Organizations organizations) {
+    public void setOrganizations(OrganizationResponse organizations) {
         this.organizations = organizations;
     }
 
-    public List<CompanyDepartment> getCompanyDepartment() {
-        return companyDepartment;
+    public AdditionalRequementResponse getAdditionalRequirements() {
+        return additionalRequirements;
     }
 
-    public void setCompanyDepartment(List<CompanyDepartment> companyDepartment) {
-        this.companyDepartment = companyDepartment;
+    public void setAdditionalRequirements(AdditionalRequementResponse additionalRequirements) {
+        this.additionalRequirements = additionalRequirements;
     }
 
-    public User getUsers() {
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public UserResponse getUsers() {
         return users;
     }
 
-    public void setUsers(User users) {
+    public void setUsers(UserResponse users) {
         this.users = users;
     }
-
-    public List<CallDetail> getCallDetail() {
-        return callDetail;
-    }
-
-    public void setCallDetail(List<CallDetail> callDetail) {
-        this.callDetail = callDetail;
-    }
-*/
-    public Integer getCreatedOn() {
-        return createdOn;
-    }
-
-    public String getModifiedOn() {
-        return modifiedOn;
-    }
-
-    /*public UserResponse getUser() {
-        return user;
-    }*/
-
-  /*  public JwtProject getProject() {
-        return project;
-    }*/
 }

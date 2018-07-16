@@ -1,7 +1,11 @@
 package com.eclipseeio.emi.model;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,7 +44,7 @@ public class Company implements Serializable {
 	@Column(name = "email")
 	private String email;
 
-	
+
 	@Column(name = "WSIB_Firm_No")
 	private String WSIBFirmNo;
 
@@ -75,7 +79,7 @@ public class Company implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER)
 	 @JoinColumn(name = "organizations_id", referencedColumnName = "id")
 	private Organizations organizations;
-	 
+
 	 @OneToMany(targetEntity = CompanyDepartment.class, mappedBy = "company")
 	 private List<CompanyDepartment> companyDepartment;
 
@@ -84,7 +88,13 @@ public class Company implements Serializable {
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User users;
 
+	@CreationTimestamp
+	@Column(name = "created_at")
+	private Date createdAt;
 
+	@UpdateTimestamp
+	@Column(name = "updated_at")
+	private Date updatedAt;
  	@OneToMany(fetch = FetchType.LAZY, mappedBy = "id")
     private List<CallDetail> callDetail;
 
@@ -288,5 +298,21 @@ public class Company implements Serializable {
 
 	public void setAdditionalRequirements(AdditionalRequirements additionalRequirements) {
 		this.additionalRequirements = additionalRequirements;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 }

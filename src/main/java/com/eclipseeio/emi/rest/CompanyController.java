@@ -53,6 +53,7 @@ public class CompanyController {
         if (result.isSuccess()) {
             try {
                 Company company = new Company();
+
                 company.setCompanyName(companyDTO.getCompanyName());
                 company.setEmail(companyDTO.getEmail());
                 company.setAddress(companyDTO.getAddress());
@@ -60,6 +61,12 @@ public class CompanyController {
                 company.setFax(companyDTO.getFax());
                 company.setHealthAndSafetyInspection(companyDTO.getHealthAndSafetyInspection());
                 company.setNeedToCarryOverVacation(companyDTO.getNeedToCarryOverVacation());
+                company.setCity(companyDTO.getCity());
+                company.setRequireJHSCMeeting(companyDTO.getRequireJHSCMeeting());
+                company.setWebsite(companyDTO.getWebsite());
+                company.setWSIBFirmNo(companyDTO.getwSIBFirmNo());
+                company.setWSIBRateGroupNo(companyDTO.getwSIBRateGroupNo());
+               // company.setUsers();
                 Organizations organizations = organizationsRepository.findById(Long.parseLong(companyDTO.getOrganizationName()));
                 if (organizations != null) {
                     company.setOrganizations(organizations);
@@ -129,39 +136,61 @@ public class CompanyController {
                     if (!company.getCompanyName().equalsIgnoreCase(companyDTO.getCompanyName())) {
                         company.setCompanyName(companyDTO.getCompanyName());
                     }
-                    if (!company.getEmail().equalsIgnoreCase(companyDTO.getCompanyName())) {
+                    if (!company.getEmail().equalsIgnoreCase(companyDTO.getEmail())) {
                         company.setEmail(companyDTO.getEmail());
                     }
-                    if (!company.getAddress().equalsIgnoreCase(companyDTO.getCompanyName())) {
+                    if (!company.getAddress().equalsIgnoreCase(companyDTO.getAddress())) {
                         company.setAddress(companyDTO.getAddress());
                     }
-                    if (company.getContactName().equalsIgnoreCase(companyDTO.getCompanyName())) {
+                    if (company.getContactName().equalsIgnoreCase(companyDTO.getContactName())) {
                         company.setContactName(companyDTO.getContactName());
                     }
-                    if (company.getFax().toString().equalsIgnoreCase(companyDTO.getCompanyName())) {
+                    if (company.getFax().toString().equalsIgnoreCase(companyDTO.getFax().toString())) {
                         company.setFax(companyDTO.getFax());
                     }
-                    if (company.getHealthAndSafetyInspection().equalsIgnoreCase(companyDTO.getCompanyName())) {
+                    if (company.getHealthAndSafetyInspection().equalsIgnoreCase(companyDTO.getHealthAndSafetyInspection())) {
                         company.setHealthAndSafetyInspection(company.getNeedHelpWithHealthAndSafety());
                     }
-                    if (company.getNeedToCarryOverVacation().toString().equalsIgnoreCase(companyDTO.getCompanyName())) {
+                    if (company.getNeedToCarryOverVacation().toString().equalsIgnoreCase(companyDTO.getNeedHelpWithHealthAndSafety())) {
                         company.setNeedToCarryOverVacation(companyDTO.getNeedToCarryOverVacation());
                     }
-                    Organizations organizations = organizationsRepository.findByOrganizationName(companyDTO.getCompanyName());
+
+                    if (company.getCity().toString().equalsIgnoreCase(companyDTO.getCity())) {
+                        company.setCity(companyDTO.getCity());
+                    }
+                    if (company.getWebsite().toString().equalsIgnoreCase(companyDTO.getWebsite())) {
+                        company.setWebsite(companyDTO.getWebsite());
+                    }
+
+                    if (company.getWSIBFirmNo().toString().equalsIgnoreCase(companyDTO.getwSIBFirmNo())) {
+                        company.setWSIBFirmNo(companyDTO.getwSIBFirmNo());
+                    }
+
+                    if (company.getWSIBRateGroupNo().toString().equalsIgnoreCase(companyDTO.getwSIBRateGroupNo())) {
+                        company.setWSIBRateGroupNo(companyDTO.getwSIBRateGroupNo());
+                    }
+
+
+                    if (company.getRequireJHSCMeeting().toString().equalsIgnoreCase(companyDTO.getRequireJHSCMeeting())) {
+                        company.setRequireJHSCMeeting(companyDTO.getRequireJHSCMeeting());
+                    }
+
+
+                    Organizations organizations = organizationsRepository.findById(Long.parseLong(companyDTO.getCompanyName()));
                     if (organizations != null) {
                         company.setOrganizations(organizations);
                     } else {
                         result.setMessage("Please provide a valid organization does not exist");
                         return result;
                     }
-                    Industry industry = industryRepository.findByIndustryName(companyDTO.getIndustry());
+                    Industry industry = industryRepository.findById(Long.parseLong(companyDTO.getIndustry()));
                     if (industry != null) {
                         company.setIndustry(industry);
                     } else {
                         result.setMessage("Please provide a valid Industry does not exist");
                         return result;
                     }
-                    States states = statesRepository.findByStateName(companyDTO.getState());
+                    States states = statesRepository.findById(Long.parseLong(companyDTO.getState()));
                     if (states != null) {
                         company.setStates(states);
                     } else {
@@ -169,14 +198,14 @@ public class CompanyController {
                         return result;
                     }
 
-                    Benefits benefits = benefitsRepository.findByBenefitsName(companyDTO.getBenfites());
+                    Benefits benefits = benefitsRepository.findById(Long.parseLong(companyDTO.getBenfites()));
                     if (states != null) {
                         company.setBenefits(benefits);
                     } else {
                         result.setMessage("Please provide a valid benefits name & it  does not exist");
                         return result;
                     }
-                    AssignTo assignTo = assignToRepository.findByAssignName(companyDTO.getAssignTo());
+                    AssignTo assignTo = assignToRepository.findById(Long.parseLong(companyDTO.getAssignTo()));
                     if (states != null) {
                         company.setAssignTo(assignTo);
                     } else {
@@ -184,7 +213,7 @@ public class CompanyController {
                         return result;
                     }
 
-                    AdditionalRequirements additionalRequirements = additionalRequirementsRepository.findByAdditionalRequirementsName(companyDTO.getAdditionalRequirements());
+                    AdditionalRequirements additionalRequirements = additionalRequirementsRepository.findById(Long.parseLong(companyDTO.getAdditionalRequirements()));
                     if (states != null) {
                         company.setAdditionalRequirements(additionalRequirements);
                     } else {
@@ -193,7 +222,7 @@ public class CompanyController {
                     }
                     companyRepository.save(company);
                     result.setSuccess(true);
-                    result.setMessage(MessageResource.MESSAGE_CREATE);
+                    result.setMessage(MessageResource.MESSAGE_UPDATE);
                 } else {
                     result.setMessage("No Company Found");
                     return result;
