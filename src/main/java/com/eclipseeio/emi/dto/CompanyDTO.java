@@ -7,12 +7,14 @@ package com.eclipseeio.emi.dto;
 public class CompanyDTO {
 
     private Long id;
-    private String userId;
+    private Long userId;
+    private Long companyId;
     private String companyName;
     private String address;
     private String city;
     private String website;
     private String state;
+    private Long organizationId;
     private String organizationName;
     private String industry;
     private String benfites;
@@ -207,11 +209,27 @@ public class CompanyDTO {
         this.needToCarryOverVacation = needToCarryOverVacation;
     }
 
-    public String getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Long getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Long companyId) {
+        this.companyId = companyId;
+    }
+
+    public Long getOrganizationId() {
+        return organizationId;
+    }
+
+    public void setOrganizationId(Long organizationId) {
+        this.organizationId = organizationId;
     }
 }

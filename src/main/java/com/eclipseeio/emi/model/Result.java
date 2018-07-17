@@ -10,9 +10,7 @@ import java.util.Map;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Result {
     private boolean success;
-
     private Page page;
-
     private List<Authority> authorities;
     private List<Industry> industries;
     private Industry industry;
@@ -28,6 +26,9 @@ public class Result {
     private List<AdditionalRequirements> additionalRequirementsList;
     private AssignTo assignTo;
     private List<AssignTo> assignToList;
+    private List<CompanyDepartment> companyDepartments;
+    private CompanyDepartment companyDepartment;
+    private User user;
 
 
     public Page getPage() {
@@ -121,6 +122,7 @@ public class Result {
         this._benefits = _benefits;
     }
 
+
     public List<States> getStates() {
         return states;
     }
@@ -169,5 +171,29 @@ public class Result {
 
     public void setAssignToList(List<AssignTo> assignToList) {
         this.assignToList = assignToList;
+    }
+        public List<CompanyDepartment> getCompanyDepartments () {
+            return companyDepartments;
+        }
+
+    public void setCompanyDepartments(List<CompanyDepartment> companyDepartments) {
+        this.companyDepartments = companyDepartments;
+    }
+
+    public CompanyDepartment getCompanyDepartment() {
+        return companyDepartment;
+    }
+
+    public void setCompanyDepartment(CompanyDepartment companyDepartment) {
+        this.companyDepartment = companyDepartment;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+
     }
 }

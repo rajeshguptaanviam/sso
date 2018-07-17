@@ -57,7 +57,6 @@ public class UserResponse implements UserDetails, Serializable {
     public String getUsername() {
         return username;
     }
-
     @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {

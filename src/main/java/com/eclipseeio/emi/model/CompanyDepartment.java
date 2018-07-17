@@ -13,11 +13,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "company_department")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CompanyDepartment {
 
 	@Id
@@ -35,7 +38,8 @@ public class CompanyDepartment {
 
 	@Column(name = "company_department_name")
 	private String companyDepartmentName;
-
+	@Column(name = "status")
+	private Boolean status;
 	@Column(name = "created_by")
 	private String createdBy;
 
@@ -101,6 +105,11 @@ public class CompanyDepartment {
 		this.company = company;
 	}
 
-	
-	
+	public Boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
+	}
 }

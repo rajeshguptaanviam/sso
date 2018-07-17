@@ -44,6 +44,8 @@ public class Company implements Serializable {
 	@Column(name = "email")
 	private String email;
 
+	@Column(name = "status")
+	private Boolean status;
 
 	@Column(name = "WSIB_Firm_No")
 	private String WSIBFirmNo;
@@ -314,5 +316,13 @@ public class Company implements Serializable {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public Boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
 	}
 }

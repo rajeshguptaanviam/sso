@@ -76,8 +76,6 @@ public class UserController {
     private String tokenHeader;
 
 
-
-
     @RequestMapping(method = GET, value = "/user/{userId}")
     @PreAuthorize("hasRole('ADMIN')")
     public User loadById(@PathVariable Long userId) {
@@ -98,11 +96,12 @@ public class UserController {
      */
     @RequestMapping("/me")
     @PreAuthorize("hasRole('USER')")
-    public User user(Principal user) {
-        return this.userService.findByUsername(user.getName());
+    public Result user(Principal user) {
+        Result result = new Result();
+        result.setSuccess(true);
+        result.setUser(this.userService.findByUsername(user.getName()));
+        return result;
     }
-
-
 
 
     @RequestMapping(value = "/users/authorities", method = RequestMethod.GET)
@@ -115,8 +114,7 @@ public class UserController {
         return result;
     }
 
-    
-    
+
     @RequestMapping(value = "/users", method = RequestMethod.POST)
     public Result create(@RequestBody UserDto userDto) {
         Result result = Validator.validateNewUser(userDto, userRepository);
@@ -148,14 +146,12 @@ public class UserController {
     }
 
 
-
-
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public Result users(@Param("pageable") Pageable pageable, @RequestParam Map<String, String> queryParameters) {
         Result result = new Result();
         try {
             if (pageable == null)
-                pageable = new PageRequest(0,10);
+                pageable = new PageRequest(0, 10);
 
             String query = queryParameters.get("query");
             Page<User> page;
@@ -178,6 +174,7 @@ public class UserController {
         }
         return result;
     }
+
     @RequestMapping(value = "/users/forgot", method = RequestMethod.POST)
     public Result forgotPassword(@RequestBody User user) {
         Result result = new Result();
@@ -189,14 +186,13 @@ public class UserController {
         } else {
             UserDetails userDetails = userDetailsService.loadUserByUsername(_user.getUsername());
             String token = tokenHelper.generateToken(userDetails);
-            String url =  aUrl + "/change-password?token=" + token;
+            String url = aUrl + "/change-password?token=" + token;
             String message = "Click here to change new password <a href='" + url + "'>Change Password</a>";
             emailService.sendHtmlMail(user.getEmail(), "HR MANG. - New Password", message);
             result.setMessage(MessageResource.MESSAGE_FORGOT_PASSWORD_EMAIL_SENT);
         }
         return result;
     }
-
 
 
     @RequestMapping(value = "/users/change-password", method = RequestMethod.PUT)
