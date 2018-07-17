@@ -1,53 +1,37 @@
 package com.eclipseeio.emi.model;
 
-import java.sql.Date;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-@Entity
-@Table(name = "organizations")
-public class Organizations {
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
+import java.util.List;
 
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@Entity
+@Table(name = "Policies")
+public class Policies {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-
-    @Column(name = "organization_name", unique = true)
+    @Column(name = "Policies_name", unique = true)
     @NotNull
-    private String organizationName;
-
-
-    @Column(name = "created_by")
-    private String createdBy;
-
-
-    @Column(name = "modified_by")
-    private String modifiedBy;
-
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
+    private String policiesName;
 
     @CreationTimestamp
     @Column(name = "created_at")
-
     private Date createdAt;
+
 
     @UpdateTimestamp
     @Column(name = "updated_at")
     private Date updatedAt;
-
 
 
     @Column(name = "active")
@@ -62,21 +46,12 @@ public class Organizations {
         this.id = id;
     }
 
-    public String getOrganizationName() {
-        return organizationName;
+    public String getPoliciesName() {
+        return policiesName;
     }
 
-    public void setOrganizationName(String organizationName) {
-        this.organizationName = organizationName;
-    }
-
-
-    public String getModifiedBy() {
-        return modifiedBy;
-    }
-
-    public void setModifiedBy(String modifiedBy) {
-        this.modifiedBy = modifiedBy;
+    public void setPoliciesName(String policiesName) {
+        this.policiesName = policiesName;
     }
 
     public Date getCreatedAt() {
@@ -94,7 +69,6 @@ public class Organizations {
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
-
 
     public Boolean getActive() {
         return active;

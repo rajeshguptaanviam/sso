@@ -9,6 +9,7 @@ public class OrganizationDTO {
 	 private String modifiedBy;
 	 private Date createdAt;
 	  private Date updatedAt;
+	private Boolean active;
 	public String getOrganizationName() {
 		return organizationName;
 	}
@@ -39,9 +40,13 @@ public class OrganizationDTO {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-	  
-	  
-	  
 
 
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
 }

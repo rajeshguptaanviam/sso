@@ -252,6 +252,27 @@ public class Validator {
 
 
 
+	public static Result validatePolicies(PoliciesDTO policiesDTO, PoliciesRepository policiesRepository) {
+		Result result = new Result();
+		result.setSuccess(true);
+		if (policiesDTO == null) {
+			result.setMessage("no input params found.");
+			result.setSuccess(false);
+		}
+		Policies policies=policiesRepository.findByPoliciesName(policiesDTO.getPoliciesName());
+		if (policies != null) {
+			result.setMessage("Please try another policies name.It is already taken");
+			result.setSuccess(false);
+		}
+		return result; }
+
+
+
+
+
+
+
+
 
 
 }

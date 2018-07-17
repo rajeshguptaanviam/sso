@@ -26,9 +26,16 @@ public class Result {
     private List<AdditionalRequirements> additionalRequirementsList;
     private AssignTo assignTo;
     private List<AssignTo> assignToList;
+
     private List<CompanyDepartment> companyDepartments;
     private CompanyDepartment companyDepartment;
     private User user;
+
+    private  Policies policies;
+    private List<Policies> policiesList;
+    private Organizations organizations;
+    private List<Organizations> organizationsList;
+
 
 
     public Page getPage() {
@@ -172,6 +179,7 @@ public class Result {
     public void setAssignToList(List<AssignTo> assignToList) {
         this.assignToList = assignToList;
     }
+
         public List<CompanyDepartment> getCompanyDepartments () {
             return companyDepartments;
         }
@@ -194,6 +202,41 @@ public class Result {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+
+
+
+    public Policies getPolicies() {
+        return policies;
+    }
+
+    public void setPolicies(Policies policies) {
+        this.policies = policies;
+    }
+
+    public List<Policies> getPoliciesList() {
+        return policiesList;
+    }
+
+    public void setPoliciesList(List<Policies> policiesList) {
+        this.policiesList = policiesList;
+    }
+
+    public Organizations getOrganizations() {
+        return organizations;
+    }
+
+    public void setOrganizations(Organizations organizations) {
+        this.organizations = organizations;
+    }
+
+    public List<Organizations> getOrganizationsList() {
+        return organizationsList;
+    }
+
+    public void setOrganizationsList(List<Organizations> organizationsList) {
+        this.organizationsList = organizationsList;
 
     }
 }

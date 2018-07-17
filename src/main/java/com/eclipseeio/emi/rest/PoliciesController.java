@@ -1,10 +1,10 @@
 package com.eclipseeio.emi.rest;
 
 
-import com.eclipseeio.emi.dto.AssignToDTO;
-import com.eclipseeio.emi.model.AssignTo;
+import com.eclipseeio.emi.dto.PoliciesDTO;
+import com.eclipseeio.emi.model.Policies;
 import com.eclipseeio.emi.model.Result;
-import com.eclipseeio.emi.repository.AssignToRepository;
+import com.eclipseeio.emi.repository.PoliciesRepository;
 import com.eclipseeio.emi.service.MessageResource;
 import com.eclipseeio.emi.service.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,24 +12,24 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping(value = "/api/")
-public class AssignToController {
+public class PoliciesController {
 
     @Autowired
-    AssignToRepository assignToRepository;
+    PoliciesRepository policiesRepository;
 
 
-    @RequestMapping(method = RequestMethod.POST, value = "addAssignTo")
-    public Result createAssignTo(@RequestBody AssignToDTO assignToDTO) {
-        Result result = Validator.validateAssignTo(assignToDTO,assignToRepository);
+    @RequestMapping(method = RequestMethod.POST, value = "addPolicies")
+    public Result createPolicies(@RequestBody PoliciesDTO policiesDTO) {
+        Result result = Validator.validatePolicies(policiesDTO,policiesRepository);
         if (result.isSuccess()) {
             try {
-
-                AssignTo assignTo=new AssignTo();
-                assignTo.setAssignName(assignToDTO.getAssignName());
-                assignTo.setActive(true);
-                assignToRepository.save(assignTo);
+                Policies policies=new Policies();
+                policies.setPoliciesName(policiesDTO.getPoliciesName());
+                policies.setActive(true);
+                policiesRepository.save(policies);
                 result.setSuccess(true);
                 result.setMessage(MessageResource.MESSAGE_CREATE);
             } catch (Exception e) {
@@ -43,16 +43,16 @@ public class AssignToController {
 
 
 
-    @RequestMapping(value = "deleteAssignTo/{id}", method = RequestMethod.DELETE)
-    public Result deleteAssignTo(@PathVariable Long id) {
+    @RequestMapping(value = "deletePolicies/{id}", method = RequestMethod.DELETE)
+    public Result deletePolicies(@PathVariable Long id) {
         Result result = new Result();
         try {
-            AssignTo assignTo=assignToRepository.findByIdAndActiveIsTrue(id);
-            if(assignTo != null) {
-                if (assignTo.getActive().equals(true)) {
-                    assignTo.setActive(false);
+            Policies policies=policiesRepository.findByIdAndActiveIsTrue(id);
+            if(policies != null) {
+                if (policies.getActive().equals(true)) {
+                  policies.setActive(false);
                     result.setMessage(MessageResource.MESSAGE_DELETE);
-                    assignToRepository.save(assignTo);
+                    policiesRepository.save(policies);
                 }
                 else {
                     result.setSuccess(true);
@@ -66,15 +66,13 @@ public class AssignToController {
     }
 
 
-
-    @RequestMapping(value = "getAssignTo", method = RequestMethod.GET)
-    public Result getAssignTo() {
+    @RequestMapping(value = "getPolicies", method = RequestMethod.GET)
+    public Result getPolicies() {
         Result result = new Result();
         try {
-            List<AssignTo> assignToList=assignToRepository.findAllByActiveIsTrue();
-            result.setAssignToList(assignToList);
+            List<Policies> policiesList=policiesRepository.findAllByActiveIsTrue();
+            result.setPoliciesList(policiesList);
             result.setSuccess(true);
-
         } catch (Exception e) {
             result.setSuccess(false);
             result.setMessage(e.getMessage());
@@ -84,17 +82,13 @@ public class AssignToController {
     }
 
 
-
-
-    @RequestMapping(value = "getAssignToById/{id}", method = RequestMethod.GET)
-    public Result getAssignToById(@PathVariable Long id) {
+    @RequestMapping(value = "getPoliciesById/{id}", method = RequestMethod.GET)
+    public Result getPoliciesById(@PathVariable Long id) {
         Result result = new Result();
         try {
-
-            AssignTo assignTo=assignToRepository.findByIdAndActiveIsTrue(id);
-
-            if(assignTo!=null) {
-                result.setAssignTo(assignTo);
+            Policies policies=policiesRepository.findByIdAndActiveIsTrue(id);
+            if(policies!=null) {
+                result.setPolicies(policies);
                 result.setSuccess(true);
             }
             else
@@ -113,18 +107,16 @@ public class AssignToController {
 
 
 
-    @RequestMapping(method = RequestMethod.PUT, value = "updateAssignTo/{id}")
-    public Result updateAssignTo(@PathVariable Long id, @RequestBody AssignToDTO assignToDTO) {
 
+    @RequestMapping(method = RequestMethod.PUT, value = "updatePolicies/{id}")
+    public Result updatePolicies(@PathVariable Long id, @RequestBody PoliciesDTO policiesDTO) {
         Result result = new Result();
         try {
+            Policies policies=policiesRepository.findByIdAndActiveIsTrue(id);
 
-
-            AssignTo assignTo=assignToRepository.findByIdAndActiveIsTrue(id);
-
-            if(assignTo!=null) {
-                assignTo.setAssignName(assignToDTO.getAssignName());
-                assignToRepository.save(assignTo);
+            if(policies!=null) {
+                policies.setPoliciesName(policiesDTO.getPoliciesName());
+                policiesRepository.save(policies);
                 result.setSuccess(true);
                 result.setMessage(MessageResource.MESSAGE_UPDATE);
             }
