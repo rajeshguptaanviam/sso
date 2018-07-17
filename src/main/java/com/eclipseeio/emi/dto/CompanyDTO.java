@@ -16,6 +16,7 @@ public class CompanyDTO {
     private String state;
     private Long organizationId;
     private String organizationName;
+    private String postalCode;
     private String industry;
     private String benfites;
     private String assignTo;
@@ -231,5 +232,13 @@ public class CompanyDTO {
 
     public void setOrganizationId(Long organizationId) {
         this.organizationId = organizationId;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
 }

@@ -60,6 +60,7 @@ public class CompanyController {
                 company.setAddress(companyDTO.getAddress());
                 company.setContactName(companyDTO.getContactName());
                 company.setFax(companyDTO.getFax());
+                company.setPostalCode(companyDTO.getPostalCode());
                 company.setHealthAndSafetyInspection(companyDTO.getHealthAndSafetyInspection());
                 company.setNeedToCarryOverVacation(companyDTO.getNeedToCarryOverVacation());
                 company.setNeedHelpWithHealthAndSafety(companyDTO.getNeedHelpWithHealthAndSafety());

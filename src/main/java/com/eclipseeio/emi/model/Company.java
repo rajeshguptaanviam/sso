@@ -50,6 +50,9 @@ public class Company implements Serializable {
 	@Column(name = "WSIB_Firm_No")
 	private String WSIBFirmNo;
 
+	@Column(name = "postalCode")
+	private String postalCode;
+
 	@Column(name = "WSIB_Rate_Group_No")
 	private String WSIBRateGroupNo;
 
@@ -324,5 +327,13 @@ public class Company implements Serializable {
 
 	public void setStatus(Boolean status) {
 		this.status = status;
+	}
+
+	public String getPostalCode() {
+		return postalCode;
+	}
+
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
 	}
 }
