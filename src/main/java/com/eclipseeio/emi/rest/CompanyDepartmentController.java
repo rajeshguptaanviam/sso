@@ -108,10 +108,13 @@ public class CompanyDepartmentController {
     @RequestMapping(value = "department/{id}", method = RequestMethod.GET)
     public Result department(@PathVariable Long id) {
         Result result = new Result();
+        result.setSuccess(true);
         try {
             CompanyDepartment companyDepartment = companyDepartmentRepository.findByIdAndStatusIsTrue(id);
+
             if(companyDepartment!=null) {
-                result.setCompanyDepartment(companyDepartment);
+                result.setCompanyDepartmentResponse(CompanyDepartmentFactory.create(companyDepartment));
+
                 result.setSuccess(true);
                 return result;
             }else
@@ -131,31 +134,33 @@ public class CompanyDepartmentController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "updateDepartment/{id}")
     public Result updateDepartment(@PathVariable Long id, @RequestBody CompanyDepartmentDTO companyDepartmentDTO) {
-        Result result = new Result();
+     /*   Result result = new Result();*/
 
-        try {
-            CompanyDepartment companyDepartment = companyDepartmentRepository.findByIdAndStatusIsTrue(id);
-            if(companyDepartment!=null) {
-                if(!companyDepartment.getCompanyDepartmentName().equalsIgnoreCase(companyDepartmentDTO.getDepartmentName())){
-                    companyDepartment.setCompanyDepartmentName(companyDepartmentDTO.getDepartmentName());
+        Result result = Validator.validateDepartment(companyDepartmentDTO,companyDepartmentRepository);
+        if(result.isSuccess()) {
+            try {
+                CompanyDepartment companyDepartment = companyDepartmentRepository.findByIdAndStatusIsTrue(id);
+                if (companyDepartment != null) {
+                    if (!companyDepartment.getCompanyDepartmentName().equalsIgnoreCase(companyDepartmentDTO.getDepartmentName())) {
+                        companyDepartment.setCompanyDepartmentName(companyDepartmentDTO.getDepartmentName());
+                    }
+                    companyDepartmentRepository.save(companyDepartment);
+                    result.setSuccess(true);
+                    result.setMessage(MessageResource.MESSAGE_UPDATE);
+                    return result;
+                } else {
+                    result.setMessage(MessageResource.MESSAGE_DATA_NOT_FOUND);
+                    result.setSuccess(true);
+                    return result;
                 }
-                companyDepartmentRepository.save(companyDepartment);
-                result.setSuccess(true);
-                result.setMessage(MessageResource.MESSAGE_UPDATE);
-                return result;
-            }else{
-                result.setMessage(MessageResource.MESSAGE_DATA_NOT_FOUND);
-                result.setSuccess(true);
-                return result;
+            } catch (Exception e) {
+                result.setSuccess(false);
+                result.setMessage(e.getMessage());
+                e.printStackTrace();
+                e.getClass();
             }
-        } catch (Exception e) {
-            result.setSuccess(false);
-            result.setMessage(e.getMessage());
-            e.printStackTrace();
-            e.getClass();
-        }
 
-        return result;
+        } return result;
     }
 
 

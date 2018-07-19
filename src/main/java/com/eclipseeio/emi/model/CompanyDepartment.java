@@ -45,6 +45,7 @@ public class CompanyDepartment {
 
 	@Column(name = "modified_by")
 	private String modifiedBy;
+
 	@CreationTimestamp
 	@Column(name = "created_at")
 	private Date createdAt;
