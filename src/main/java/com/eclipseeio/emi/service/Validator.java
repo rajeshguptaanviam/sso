@@ -131,7 +131,12 @@ public class Validator {
                                          OrganizationsRepository organizationsRepository) {
         Result result = new Result();
         result.setSuccess(true);
-        if (companyDTO == null) {
+
+        if (companyDTO.getOrganizationId()== null) {
+            result.setMessage("Organization Id can not be Empty  and required*");
+            result.setSuccess(false);
+            return result;
+        }else if (companyDTO == null) {
             result.setMessage("no input params found");
             result.setSuccess(false);
         } else if (TextUtils.isEmpty(companyDTO.getAddress())) {
@@ -166,10 +171,6 @@ public class Validator {
         } else if (TextUtils.isEmpty(companyDTO.getState())) {
             result.setMessage("State is required*");
             result.setSuccess(false);
-        } else if (TextUtils.isEmpty(companyDTO.getOrganizationId().toString())) {
-            result.setMessage("Organization Id can not be Empty  and required*");
-            result.setSuccess(false);
-            return result;
         }
         if (result.isSuccess()) {
             Organizations _company = organizationsRepository.findById(companyDTO.getOrganizationId());
@@ -183,6 +184,15 @@ public class Validator {
             Company _company = companyRepository.findByCompanyName(companyDTO.getCompanyName());
             if (_company != null) {
                 result.setMessage("Please try another Company Name already taken ");
+                result.setSuccess(false);
+                return result;
+            }
+        }
+
+        if (result.isSuccess()) {
+            Company _company = companyRepository.findByEmail(companyDTO.getEmail());
+            if (_company != null) {
+                result.setMessage("Please try another Email  already taken ");
                 result.setSuccess(false);
                 return result;
             }

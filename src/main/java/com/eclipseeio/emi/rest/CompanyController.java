@@ -6,17 +6,23 @@ import com.eclipseeio.emi.model.response.CompanyResponeFactory;
 import com.eclipseeio.emi.model.response.CompanyResponse;
 import com.eclipseeio.emi.model.specifications.CompanySpecification;
 import com.eclipseeio.emi.repository.*;
+import com.eclipseeio.emi.service.EmailService;
 import com.eclipseeio.emi.service.MessageResource;
 import com.eclipseeio.emi.service.Validator;
-import org.hibernate.tool.hbm2ddl.TableMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -47,11 +53,15 @@ public class CompanyController {
     @Autowired
     private UserRepository userRepository;
 
+
+    @Autowired
+    private EmailService emailService;
+
     @RequestMapping(method = RequestMethod.POST, value = "addCompany")
     @PreAuthorize("hasAnyRole('HR','ADMIN')")
     public Result createCompany(@RequestBody CompanyDTO companyDTO) {
         Result result = Validator.validateCompany(companyDTO, companyRepository, organizationsRepository);
-        User user_=userRepository.findById(companyDTO.getUserId());
+        User user_ = userRepository.findById(companyDTO.getUserId());
         if (result.isSuccess()) {
             try {
                 Company company = new Company();
@@ -70,7 +80,7 @@ public class CompanyController {
                 company.setWSIBFirmNo(companyDTO.getwSIBFirmNo());
                 company.setWSIBRateGroupNo(companyDTO.getwSIBRateGroupNo());
                 Organizations organizations = organizationsRepository.findById(companyDTO.getOrganizationId());
-                if(user_!=null){
+                if (user_ != null) {
                     company.setUsers(user_);
                 }
                 if (organizations != null) {
@@ -119,6 +129,7 @@ public class CompanyController {
                     return result;
                 }
                 companyRepository.save(company);
+                emailService.sendEmail(companyDTO.getEmail(), "Company registration", "Company has been registered successfully");
                 result.setSuccess(true);
                 result.setMessage(MessageResource.MESSAGE_CREATE);
             } catch (Exception e) {
@@ -229,6 +240,7 @@ public class CompanyController {
                         return result;
                     }
                     companyRepository.save(company);
+                    emailService.sendEmail(companyDTO.getEmail(), "Company Update Content", "Company has been updated successfully");
                     result.setSuccess(true);
                     result.setMessage(MessageResource.MESSAGE_UPDATE);
                 } else {
@@ -242,7 +254,6 @@ public class CompanyController {
         }
         return result;
     }
-
 
     @RequestMapping(value = "deleteCompany/{id}", method = RequestMethod.DELETE)
     public Result delete(@PathVariable Long id) {
@@ -295,20 +306,79 @@ public class CompanyController {
         return result;
     }
 
-    @RequestMapping(value = "downloadCSV", method = RequestMethod.GET)
-    public Result downloadCSV() {
+    @RequestMapping(value = "downloadCompanyCSV", method = RequestMethod.GET)
+    public ModelAndView downloadCSV(Model model, HttpServletResponse response) throws Exception {
+        String COMMA_DELIMITER = ",";
+        String NEW_LINE_SEPARATOR = "\n";
+        FileWriter fileWriter = new FileWriter(System.getProperty("user.dir") + "\\company.csv", false);
+
+
         Result result = new Result();
         result.setSuccess(true);
         try {
+            String FILE_HEADER = "id,company_name,contact_name,email,website,address,phone,fax,created,updated";
+            fileWriter.append(FILE_HEADER.toString());
+            fileWriter.append(NEW_LINE_SEPARATOR);
             List<Company> company = companyRepository.findAll();
+<<<<<<< Updated upstream
             if(company!=null){
 
+=======
+            for (Company company_ : company) {
+                fileWriter.append(String.valueOf(company_.getId()));
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(company_.getCompanyName());
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(company_.getContactName());
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(company_.getEmail());
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(company_.getWebsite());
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(company_.getAddress());
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(String.valueOf(company_.getPhone()));
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(String.valueOf(company_.getFax()));
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(String.valueOf(company_.getCreatedAt()));
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(String.valueOf(company_.getUpdatedAt()));
+                fileWriter.append(NEW_LINE_SEPARATOR);
+>>>>>>> Stashed changes
             }
         } catch (Exception e) {
             result.setMessage(e.getMessage());
             result.setSuccess(false);
+        } finally {
+            try {
+                fileWriter.flush();
+                fileWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        return result;
+        return new ModelAndView("redirect:/api/companyCSV");
+    }
+
+    @GetMapping(value = "/companyCSV")
+    public void download(HttpServletResponse response) throws IOException {
+        File file = new File(System.getProperty("user.dir") + "\\company.csv");
+        if (file.exists()) {
+            String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+            if (mimeType == null) {
+                mimeType = "application/octet-stream";
+            }
+            response.setContentType(mimeType);
+            response.setHeader("Content-Disposition", String.format("inline; filename=\"" + file.getName() + "\""));
+
+            response.setContentLength((int) file.length());
+
+            InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+
+            FileCopyUtils.copy(inputStream, response.getOutputStream());
+
+        }
     }
 
 

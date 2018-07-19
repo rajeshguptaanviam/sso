@@ -16,6 +16,7 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
 	Page<Company> findAll(Specification<Company> specification, Pageable pageable);
 	Page<Company> findAllByStatusIsTrue(Specification<Company> specification, Pageable pageable);
 	Page<Company> findAllByStatusIsTrue(Pageable pageable);
+	Company findByEmail(String email);
 
 
 

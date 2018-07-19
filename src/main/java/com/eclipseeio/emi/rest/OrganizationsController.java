@@ -4,6 +4,7 @@ import com.eclipseeio.emi.dto.OrganizationDTO;
 import com.eclipseeio.emi.model.Organizations;
 import com.eclipseeio.emi.model.Result;
 import com.eclipseeio.emi.repository.OrganizationsRepository;
+import com.eclipseeio.emi.service.EmailService;
 import com.eclipseeio.emi.service.MessageResource;
 import com.eclipseeio.emi.service.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ public class OrganizationsController {
 
 	@Autowired
 	private OrganizationsRepository organizationsRepository;
+	@Autowired
+	private EmailService emailService;
 
 	@RequestMapping(method = RequestMethod.POST, value = "addOrganization")
 	@PreAuthorize("hasAnyRole('ADMIN','HR')")
