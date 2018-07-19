@@ -7,18 +7,17 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.List;
 
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
 @Table(name = "Assign_To")
+
 public class AssignTo {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
 
 
     @Column(name = "AssignTo_name", unique = true)

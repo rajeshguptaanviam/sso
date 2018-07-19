@@ -16,6 +16,7 @@ public class MessageResource {
     public static String MESSAGE_FORGOT_PASSWORD_EMAIL_SENT;
     public static String MESSAGE_TOKEN_EXPIRED;
     public static String MESSAGE_DATA_NOT_FOUND;
+
     public MessageResource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasename("messages/msg");
