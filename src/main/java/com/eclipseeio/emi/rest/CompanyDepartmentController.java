@@ -6,6 +6,8 @@ import com.eclipseeio.emi.model.Company;
 import com.eclipseeio.emi.model.CompanyDepartment;
 import com.eclipseeio.emi.model.Industry;
 import com.eclipseeio.emi.model.Result;
+import com.eclipseeio.emi.model.response.CompanyDepartmentFactory;
+import com.eclipseeio.emi.model.response.CompanyDepartmentResponse;
 import com.eclipseeio.emi.repository.CompanyDepartmentRepository;
 import com.eclipseeio.emi.repository.CompanyRepository;
 import com.eclipseeio.emi.repository.IndustryRepository;
@@ -14,6 +16,7 @@ import com.eclipseeio.emi.service.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -35,6 +38,8 @@ public class CompanyDepartmentController {
                 CompanyDepartment companyDepartment = new CompanyDepartment();
                 companyDepartment.setCompanyDepartmentName(companyDepartmentDTO.getDepartmentName());
                 companyDepartment.setCompany(company);
+                companyDepartment.setStatus(true);
+                companyDepartmentRepository.save(companyDepartment);
                 result.setSuccess(true);
                 result.setMessage(MessageResource.MESSAGE_CREATE);
                 return result;
@@ -70,7 +75,6 @@ public class CompanyDepartmentController {
             }
 
         } catch (Exception e) {
-
             result.setSuccess(false);
             result.setMessage(e.getMessage());
             e.printStackTrace();
@@ -81,14 +85,17 @@ public class CompanyDepartmentController {
 
 
     @RequestMapping(value = "departments", method = RequestMethod.GET)
-    public Result getIndustry() {
+    public Result getDepartments() {
         Result result = new Result();
         try {
-            List<CompanyDepartment> companyDepartments = companyDepartmentRepository.findAllByStatusIsTrue();
-            result.setCompanyDepartments(companyDepartments);
+            List<CompanyDepartment> companyDepartmentList = companyDepartmentRepository.findAllByStatusIsTrue();
+            List<CompanyDepartmentResponse> companyDepartmentResponses = new ArrayList<CompanyDepartmentResponse>();
+            for (CompanyDepartment companyDepartment:companyDepartmentList) {
+                companyDepartmentResponses.add(CompanyDepartmentFactory.create(companyDepartment));
+            }
+            result.set_companyDepartmentResponse(companyDepartmentResponses);
             result.setSuccess(true);
-            return result;
-
+/*            return result;*/
         } catch (Exception e) {
             result.setSuccess(false);
             result.setMessage(e.getMessage());
@@ -123,7 +130,7 @@ public class CompanyDepartmentController {
 
 
     @RequestMapping(method = RequestMethod.PUT, value = "updateDepartment/{id}")
-    public Result updateIndustry(@PathVariable Long id, @RequestBody CompanyDepartmentDTO companyDepartmentDTO) {
+    public Result updateDepartment(@PathVariable Long id, @RequestBody CompanyDepartmentDTO companyDepartmentDTO) {
         Result result = new Result();
 
         try {
@@ -138,6 +145,7 @@ public class CompanyDepartmentController {
                 return result;
             }else{
                 result.setMessage(MessageResource.MESSAGE_DATA_NOT_FOUND);
+                result.setSuccess(true);
                 return result;
             }
         } catch (Exception e) {

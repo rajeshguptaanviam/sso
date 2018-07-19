@@ -21,7 +21,7 @@ public class OrganizationsController {
 
 	@RequestMapping(method = RequestMethod.POST, value = "addOrganization")
 	@PreAuthorize("hasAnyRole('ADMIN','HR')")
-	public Result createOrg(OrganizationDTO organizationDTO) {
+	public Result createOrg(@RequestBody OrganizationDTO organizationDTO) {
 		Result result = Validator.validateOrganization(organizationDTO, organizationsRepository);
 		if (result.isSuccess()) {
 			try {
@@ -45,15 +45,16 @@ public class OrganizationsController {
 	public Result deleteOrganizations(@PathVariable Long id) {
 		Result result = new Result();
 		try {
-			Organizations organizations = organizationsRepository.findByIdAndActiveIsTrue(id);
+			Organizations organizations = organizationsRepository.findById(id);
 			if (organizations != null) {
 				if (organizations.getActive().equals(true)) {
 					organizations.setActive(false);
 					result.setMessage(MessageResource.MESSAGE_DELETE);
+					result.setSuccess(true);
 					organizationsRepository.save(organizations);
 				} else {
 					result.setSuccess(true);
-					result.setMessage(MessageResource.MESSAGE_DELETE);
+					result.setMessage("Allready Deleted...");
 				}
 			}
 		} catch (Exception e) {
@@ -106,24 +107,25 @@ public class OrganizationsController {
 
 	@RequestMapping(method = RequestMethod.PUT, value = "updateOrganizations/{id}")
 	public Result updateOrganizations(@PathVariable Long id, @RequestBody OrganizationDTO organizationDTO) {
-
-		Result result = new Result();
-		try {
-			Organizations organizations = organizationsRepository.findByIdAndActiveIsTrue(id);
-
-			if (organizations != null) {
-				organizations.setOrganizationName(organizationDTO.getOrganizationName());
-				organizationsRepository.save(organizations);
-				result.setSuccess(true);
-				result.setMessage(MessageResource.MESSAGE_UPDATE);
-			} else {
-				result.setMessage(MessageResource.MESSAGE_DATA_NOT_FOUND);
+		Result result = Validator.validateOrganization(organizationDTO, organizationsRepository);
+		if (result.isSuccess()) {
+		/*Result result = new Result();*/
+			try {
+				Organizations organizations = organizationsRepository.findByIdAndActiveIsTrue(id);
+				if (organizations != null) {
+					organizations.setOrganizationName(organizationDTO.getOrganizationName());
+					organizationsRepository.save(organizations);
+					result.setSuccess(true);
+					result.setMessage(MessageResource.MESSAGE_UPDATE);
+				} else {
+					result.setMessage(MessageResource.MESSAGE_DATA_NOT_FOUND);
+				}
+			} catch (Exception e) {
+				result.setSuccess(false);
+				result.setMessage(e.getMessage());
+				e.printStackTrace();
+				e.getClass();
 			}
-		} catch (Exception e) {
-			result.setSuccess(false);
-			result.setMessage(e.getMessage());
-			e.printStackTrace();
-			e.getClass();
 		}
 		return result;
 	}

@@ -1,12 +1,10 @@
 package com.eclipseeio.emi.model;
 
-import java.sql.Date;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import javax.persistence.*;
+import java.sql.Date;
 
 @Entity
 @Table(name = "organizations")
@@ -19,11 +17,11 @@ public class Organizations {
 
 
     @Column(name = "organization_name", unique = true)
-    @NotNull
     private String organizationName;
 
 
     @Column(name = "created_by")
+
     private String createdBy;
 
 
@@ -32,7 +30,7 @@ public class Organizations {
 
 
     public String getCreatedBy() {
-        return createdBy;
+         return createdBy;
     }
 
     public void setCreatedBy(String createdBy) {
@@ -41,13 +39,11 @@ public class Organizations {
 
     @CreationTimestamp
     @Column(name = "created_at")
-
     private Date createdAt;
 
     @UpdateTimestamp
     @Column(name = "updated_at")
     private Date updatedAt;
-
 
 
     @Column(name = "active")

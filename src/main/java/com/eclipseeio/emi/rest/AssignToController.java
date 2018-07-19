@@ -47,16 +47,17 @@ public class AssignToController {
     public Result deleteAssignTo(@PathVariable Long id) {
         Result result = new Result();
         try {
-            AssignTo assignTo=assignToRepository.findByIdAndActiveIsTrue(id);
+            AssignTo assignTo=assignToRepository.findById(id);
             if(assignTo != null) {
                 if (assignTo.getActive().equals(true)) {
                     assignTo.setActive(false);
+                    result.setSuccess(true);
                     result.setMessage(MessageResource.MESSAGE_DELETE);
                     assignToRepository.save(assignTo);
                 }
                 else {
                     result.setSuccess(true);
-                    result.setMessage(MessageResource.MESSAGE_DELETE); }
+                    result.setMessage("Already deleted.."); }
             }
         } catch (Exception e) {
             result.setSuccess(false);
@@ -116,28 +117,27 @@ public class AssignToController {
     @RequestMapping(method = RequestMethod.PUT, value = "updateAssignTo/{id}")
     public Result updateAssignTo(@PathVariable Long id, @RequestBody AssignToDTO assignToDTO) {
 
-        Result result = new Result();
-        try {
+        /*Result result = new Result();*/
+        Result result = Validator.validateAssignTo(assignToDTO,assignToRepository);
+        if (result.isSuccess()) {
+            try {
+                AssignTo assignTo = assignToRepository.findByIdAndActiveIsTrue(id);
 
-
-            AssignTo assignTo=assignToRepository.findByIdAndActiveIsTrue(id);
-
-            if(assignTo!=null) {
-                assignTo.setAssignName(assignToDTO.getAssignName());
-                assignToRepository.save(assignTo);
-                result.setSuccess(true);
-                result.setMessage(MessageResource.MESSAGE_UPDATE);
+                if (assignTo != null) {
+                    assignTo.setAssignName(assignToDTO.getAssignName());
+                    assignToRepository.save(assignTo);
+                    result.setSuccess(true);
+                    result.setMessage(MessageResource.MESSAGE_UPDATE);
+                } else {
+                    result.setMessage(MessageResource.MESSAGE_DATA_NOT_FOUND);
+                }
+            } catch (Exception e) {
+                result.setSuccess(false);
+                result.setMessage(e.getMessage());
+                e.printStackTrace();
+                e.getClass();
             }
-            else{
-                result.setMessage(MessageResource.MESSAGE_DATA_NOT_FOUND);
-            }
-        } catch (Exception e) {
-            result.setSuccess(false);
-            result.setMessage(e.getMessage());
-            e.printStackTrace();
-            e.getClass();
-        }
-        return result;
+        }return result;
     }
 
 

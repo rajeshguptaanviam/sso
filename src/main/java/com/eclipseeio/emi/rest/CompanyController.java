@@ -253,9 +253,10 @@ public class CompanyController {
             if (company != null) {
                 result.setMessage(MessageResource.MESSAGE_DELETE);
                 company.setStatus(false);
+                result.setSuccess(true);
                 companyRepository.save(company);
             } else {
-                result.setSuccess(false);
+                result.setSuccess(true);
                 result.setMessage(MessageResource.MESSAGE_ADMIN_DELETE);
             }
         } catch (Exception e) {
@@ -300,8 +301,6 @@ public class CompanyController {
         result.setSuccess(true);
         try {
             List<Company> company = companyRepository.findAll();
-
-
             if(company!=null){
 
             }

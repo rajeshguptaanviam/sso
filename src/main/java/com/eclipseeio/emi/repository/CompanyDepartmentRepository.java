@@ -19,4 +19,5 @@ public interface CompanyDepartmentRepository extends JpaRepository<CompanyDepart
 	CompanyDepartment findByIdAndStatusIsTrue(Long id);
 	List<CompanyDepartment> findAllByStatusIsTrue();
 
+
 }

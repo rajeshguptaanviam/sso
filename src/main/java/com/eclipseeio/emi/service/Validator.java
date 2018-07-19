@@ -89,6 +89,9 @@ public class Validator {
         if (industryDto == null) {
             result.setMessage("no input params found");
             result.setSuccess(false);
+        }else if (TextUtils.isEmpty(industryDto.getIndustryName())) {
+            result.setMessage("Industery name is required*");
+            result.setSuccess(false);
         }
         Industry industry = industryRepository.findByIndustryName(industryDto.getIndustryName());
 
@@ -109,10 +112,13 @@ public class Validator {
             result.setMessage("no input params found");
             result.setSuccess(false);
             return result;
+        } else if (TextUtils.isEmpty(companyDepartmentDTO.getDepartmentName())){
+            result.setMessage("Department name is required*");
+            result.setSuccess(false);
         }
         CompanyDepartment companyDepartment = companyDepartmentRepository.findByCompanyDepartmentName(companyDepartmentDTO.getDepartmentName());
         if (companyDepartment != null) {
-            result.setMessage("Please try another industry name.It is already taken");
+            result.setMessage("Please try another department name.It is already taken");
             result.setSuccess(false);
             return result;
         }
@@ -192,6 +198,10 @@ public class Validator {
             result.setMessage("no input params found.");
             result.setSuccess(false);
         }
+        else if (TextUtils.isEmpty(benefitsDto.getBenefitsName())) {
+            result.setMessage("Benefits name is required*");
+            result.setSuccess(false);
+        }
 
         Benefits benefits = benefitsRepository.findByBenefitsName(benefitsDto.getBenefitsName());
 
@@ -213,6 +223,10 @@ public class Validator {
 			result.setMessage("no input params found.");
 			result.setSuccess(false);
 		}
+        else if (TextUtils.isEmpty(statesDTO.getStateName())) {
+            result.setMessage("State name is required*");
+            result.setSuccess(false);
+        }
 		States states=statesRepository.findByStateName(statesDTO.getStateName());
 		if (states != null) {
 			result.setMessage("Please try another states name.It is already taken");
@@ -228,6 +242,10 @@ public class Validator {
 			result.setMessage("no input params found.");
 			result.setSuccess(false);
 		}
+        else if (TextUtils.isEmpty(additionalRequirementsDTO.getAdditionalRequirementsName())) {
+            result.setMessage("Additional Requirements name is required*");
+            result.setSuccess(false);
+        }
 		AdditionalRequirements additionalRequirements=additionalRequirementsRepository.findByAdditionalRequirementsName(additionalRequirementsDTO.getAdditionalRequirementsName());
 		if (additionalRequirements != null) {
 			result.setMessage("Please try another Additional Requirements name.It is already taken");
@@ -243,6 +261,10 @@ public class Validator {
 			result.setMessage("no input params found.");
 			result.setSuccess(false);
 		}
+        else if (TextUtils.isEmpty(assignToDTO.getAssignName())) {
+            result.setMessage("AssignTo name is required*");
+            result.setSuccess(false);
+        }
 		AssignTo assignTo=assignToRepository.findByAssignName(assignToDTO.getAssignName());
 		if (assignTo != null) {
 			result.setMessage("Please try another AssignTo name.It is already taken");
@@ -259,6 +281,10 @@ public class Validator {
 			result.setMessage("no input params found.");
 			result.setSuccess(false);
 		}
+        else if (TextUtils.isEmpty(policiesDTO.getPoliciesName())) {
+            result.setMessage("Policies name is required*");
+            result.setSuccess(false);
+        }
 		Policies policies=policiesRepository.findByPoliciesName(policiesDTO.getPoliciesName());
 		if (policies != null) {
 			result.setMessage("Please try another policies name.It is already taken");
@@ -268,10 +294,23 @@ public class Validator {
 
 
 
-
-
-
-
+    public static Result validatePerformanceReview(PerformanceReviewDTO performanceReviewDTO,PerformanceReviewRepository performanceReviewRepository) {
+        Result result = new Result();
+        result.setSuccess(true);
+        if (performanceReviewDTO == null) {
+            result.setMessage("no input params found.");
+            result.setSuccess(false);
+        }
+        else if (TextUtils.isEmpty(performanceReviewDTO.getPerformanceReviewName())) {
+            result.setMessage("PerformanceReview name is required*");
+            result.setSuccess(false);
+        }
+        PerformanceReview performanceReview=performanceReviewRepository.findByPerformanceReviewName(performanceReviewDTO.getPerformanceReviewName());
+        if (performanceReview != null) {
+            result.setMessage("Please try another performanceReview name.It is already taken");
+            result.setSuccess(false);
+        }
+        return result; }
 
 
 

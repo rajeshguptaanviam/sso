@@ -49,12 +49,16 @@ public class StatesController {
             if(states !=null) {
                 if (states.getActive().equals(true)) {
                     states.setActive(false);
-                    result.setMessage(MessageResource.MESSAGE_DELETE);
                     statesRepository.save(states);
+                    result.setMessage(MessageResource.MESSAGE_DELETE);
+                    result.setSuccess(true);
                 } else {
                     result.setSuccess(true);
-                    result.setMessage(MessageResource.MESSAGE_DELETE);
+                    result.setMessage(MessageResource.MESSAGE_ADMIN_DELETE);
                 }
+            }else{
+                result.setSuccess(true);
+                result.setMessage("Already Deleted");
             }
         } catch (Exception e) {
             result.setSuccess(false);
@@ -104,26 +108,28 @@ public class StatesController {
     @RequestMapping(method = RequestMethod.PUT, value = "updateStates/{id}")
     public Result updateStates(@PathVariable Long id, @RequestBody StatesDTO statesDTO) {
 
-        Result result = new Result();
-        try {
+     /*   Result result = new Result();*/
+        Result result = Validator.validateStates(statesDTO,statesRepository);
+        if (result.isSuccess()) {
+            try {
 
 
-            States states=statesRepository.findByIdAndActive(id,true);
+                States states = statesRepository.findByIdAndActive(id, true);
 
-            if(states!=null) {
-                states.setStateName(statesDTO.getStateName());
-                statesRepository.save(states);
-                result.setSuccess(true);
-                result.setMessage(MessageResource.MESSAGE_UPDATE);
+                if (states != null) {
+                    states.setStateName(statesDTO.getStateName());
+                    statesRepository.save(states);
+                    result.setSuccess(true);
+                    result.setMessage(MessageResource.MESSAGE_UPDATE);
+                } else {
+                    result.setMessage(MessageResource.MESSAGE_DATA_NOT_FOUND);
+                }
+            } catch (Exception e) {
+                result.setSuccess(false);
+                result.setMessage(e.getMessage());
+                e.printStackTrace();
+                e.getClass();
             }
-            else{
-                result.setMessage(MessageResource.MESSAGE_DATA_NOT_FOUND);
-            }
-        } catch (Exception e) {
-            result.setSuccess(false);
-            result.setMessage(e.getMessage());
-            e.printStackTrace();
-            e.getClass();
         }
         return result;
     }

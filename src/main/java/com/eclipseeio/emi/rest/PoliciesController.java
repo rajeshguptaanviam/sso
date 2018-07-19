@@ -47,16 +47,17 @@ public class PoliciesController {
     public Result deletePolicies(@PathVariable Long id) {
         Result result = new Result();
         try {
-            Policies policies=policiesRepository.findByIdAndActiveIsTrue(id);
+            Policies policies=policiesRepository.findById(id);
             if(policies != null) {
                 if (policies.getActive().equals(true)) {
                   policies.setActive(false);
                     result.setMessage(MessageResource.MESSAGE_DELETE);
+                    result.setSuccess(true);
                     policiesRepository.save(policies);
                 }
                 else {
                     result.setSuccess(true);
-                    result.setMessage(MessageResource.MESSAGE_DELETE); }
+                    result.setMessage("Already Deleted..."); }
             }
         } catch (Exception e) {
             result.setSuccess(false);
@@ -105,31 +106,30 @@ public class PoliciesController {
 
 
 
-
-
-
     @RequestMapping(method = RequestMethod.PUT, value = "updatePolicies/{id}")
     public Result updatePolicies(@PathVariable Long id, @RequestBody PoliciesDTO policiesDTO) {
-        Result result = new Result();
-        try {
-            Policies policies=policiesRepository.findByIdAndActiveIsTrue(id);
 
-            if(policies!=null) {
-                policies.setPoliciesName(policiesDTO.getPoliciesName());
-                policiesRepository.save(policies);
-                result.setSuccess(true);
-                result.setMessage(MessageResource.MESSAGE_UPDATE);
+        Result result = Validator.validatePolicies(policiesDTO,policiesRepository);
+        if (result.isSuccess()) {
+       /* Result result = new Result();*/
+            try {
+                Policies policies = policiesRepository.findByIdAndActiveIsTrue(id);
+
+                if (policies != null) {
+                    policies.setPoliciesName(policiesDTO.getPoliciesName());
+                    policiesRepository.save(policies);
+                    result.setSuccess(true);
+                    result.setMessage(MessageResource.MESSAGE_UPDATE);
+                } else {
+                    result.setMessage(MessageResource.MESSAGE_DATA_NOT_FOUND);
+                }
+            } catch (Exception e) {
+                result.setSuccess(false);
+                result.setMessage(e.getMessage());
+                e.printStackTrace();
+                e.getClass();
             }
-            else{
-                result.setMessage(MessageResource.MESSAGE_DATA_NOT_FOUND);
-            }
-        } catch (Exception e) {
-            result.setSuccess(false);
-            result.setMessage(e.getMessage());
-            e.printStackTrace();
-            e.getClass();
-        }
-        return result;
+        }return result;
     }
 
 

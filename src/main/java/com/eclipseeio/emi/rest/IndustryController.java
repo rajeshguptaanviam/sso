@@ -43,14 +43,15 @@ public class IndustryController {
     public Result delete(@PathVariable Long id) {
         Result result = new Result();
         try {
-            Industry industry=industryRepository.findByIdAndActive(id,true);
+            Industry industry=industryRepository.findById(id);
             if(industry != null) {
                 if (industry.getActive().equals(true)) {
                     industry.setActive(false);
                     industryRepository.save(industry);
+                    result.setMessage(MessageResource.MESSAGE_DELETE);
                 } else {
                     result.setSuccess(true);
-                    result.setMessage(MessageResource.MESSAGE_DELETE);
+                    result.setMessage("Allready deleted..");
                 }
             }
         } catch (Exception e) {
@@ -106,26 +107,28 @@ public class IndustryController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "updateIndustry/{id}")
     public Result updateIndustry(@PathVariable Long id, @RequestBody IndustryDto industryDto) {
-        Result result = new Result();
+   /*     Result result = new Result();*/
 
-        try {
-            Industry industries = industryRepository.findByIdAndActive(id,true);
-            if(industries!=null) {
-                industries.setIndustryName(industryDto.getIndustryName());
-                industryRepository.save(industries);
-                result.setSuccess(true);
-                result.setMessage(MessageResource.MESSAGE_UPDATE);
-            }else{
-                result.setMessage(MessageResource.MESSAGE_DATA_NOT_FOUND);
+        Result result = Validator.validateIndustry(industryDto,industryRepository);
+        if (result.isSuccess()) {
+            try {
+                Industry industries = industryRepository.findByIdAndActive(id, true);
+                if (industries != null) {
+                    industries.setIndustryName(industryDto.getIndustryName());
+                    industryRepository.save(industries);
+                    result.setSuccess(true);
+                    result.setMessage(MessageResource.MESSAGE_UPDATE);
+                } else {
+                    result.setMessage(MessageResource.MESSAGE_DATA_NOT_FOUND);
+                }
+            } catch (Exception e) {
+                result.setSuccess(false);
+                result.setMessage(e.getMessage());
+                e.printStackTrace();
+                e.getClass();
             }
-        } catch (Exception e) {
-            result.setSuccess(false);
-            result.setMessage(e.getMessage());
-            e.printStackTrace();
-            e.getClass();
-        }
 
-        return result;
+        }return result;
     }
 
 

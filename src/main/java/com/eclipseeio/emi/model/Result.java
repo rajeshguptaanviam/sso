@@ -1,5 +1,7 @@
 package com.eclipseeio.emi.model;
 
+import com.eclipseeio.emi.dto.CompanyDTO;
+import com.eclipseeio.emi.model.response.CompanyDepartmentResponse;
 import com.eclipseeio.emi.model.response.CompanyResponse;
 import com.eclipseeio.emi.model.response.UserResponse;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -26,8 +28,11 @@ public class Result {
     private List<AdditionalRequirements> additionalRequirementsList;
     private AssignTo assignTo;
     private List<AssignTo> assignToList;
+    private CompanyDepartmentResponse companyDepartmentResponse;
+    private List<CompanyDepartmentResponse> _companyDepartmentResponse;
 
-    private List<CompanyDepartment> companyDepartments;
+    private List<CompanyDepartment> companyDepartmentList;
+    private List<CompanyDTO> companyDTOS;
     private CompanyDepartment companyDepartment;
     private User user;
 
@@ -35,6 +40,9 @@ public class Result {
     private List<Policies> policiesList;
     private Organizations organizations;
     private List<Organizations> organizationsList;
+
+    private PerformanceReview performanceReview;
+    private List<PerformanceReview> performanceReviewList;
 
 
 
@@ -180,12 +188,12 @@ public class Result {
         this.assignToList = assignToList;
     }
 
-        public List<CompanyDepartment> getCompanyDepartments () {
-            return companyDepartments;
-        }
+    public List<CompanyDepartment> getCompanyDepartmentList() {
+        return companyDepartmentList;
+    }
 
-    public void setCompanyDepartments(List<CompanyDepartment> companyDepartments) {
-        this.companyDepartments = companyDepartments;
+    public void setCompanyDepartmentList(List<CompanyDepartment> companyDepartmentList) {
+        this.companyDepartmentList = companyDepartmentList;
     }
 
     public CompanyDepartment getCompanyDepartment() {
@@ -238,5 +246,46 @@ public class Result {
     public void setOrganizationsList(List<Organizations> organizationsList) {
         this.organizationsList = organizationsList;
 
+    }
+
+
+    public PerformanceReview getPerformanceReview() {
+        return performanceReview;
+    }
+
+    public void setPerformanceReview(PerformanceReview performanceReview) {
+        this.performanceReview = performanceReview;
+    }
+
+    public List<PerformanceReview> getPerformanceReviewList() {
+        return performanceReviewList;
+    }
+
+    public void setPerformanceReviewList(List<PerformanceReview> performanceReviewList) {
+        this.performanceReviewList = performanceReviewList;
+    }
+
+    public List<CompanyDTO> getCompanyDTOS() {
+        return companyDTOS;
+    }
+
+    public void setCompanyDTOS(List<CompanyDTO> companyDTOS) {
+        this.companyDTOS = companyDTOS;
+    }
+
+    public CompanyDepartmentResponse getCompanyDepartmentResponse() {
+        return companyDepartmentResponse;
+    }
+
+    public void setCompanyDepartmentResponse(CompanyDepartmentResponse companyDepartmentResponse) {
+        this.companyDepartmentResponse = companyDepartmentResponse;
+    }
+
+    public List<CompanyDepartmentResponse> get_companyDepartmentResponse() {
+        return _companyDepartmentResponse;
+    }
+
+    public void set_companyDepartmentResponse(List<CompanyDepartmentResponse> _companyDepartmentResponse) {
+        this._companyDepartmentResponse = _companyDepartmentResponse;
     }
 }

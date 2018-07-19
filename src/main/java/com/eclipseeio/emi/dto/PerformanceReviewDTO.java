@@ -1,45 +1,19 @@
-package com.eclipseeio.emi.model;
+package com.eclipseeio.emi.dto;
 
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.List;
+public class PerformanceReviewDTO {
 
-
-
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@Entity
-@Table(name = "Performance_Review")
-
-public class PerformanceReview {
-
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Column(name = "performance_review_name", unique = true)
-    @NotNull
     private String performanceReviewName;
-
-
-    @CreationTimestamp
-    @Column(name = "created_at")
     private Date createdAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_at")
     private Date updatedAt;
-
-    @Column(name = "active")
     private Boolean active;
-
-
 
     public Long getId() {
         return id;

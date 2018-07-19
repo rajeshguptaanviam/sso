@@ -1,5 +1,7 @@
 package com.eclipseeio.emi.dto;
 
+import com.eclipseeio.emi.model.Company;
+
 import java.util.Date;
 
 public class CompanyDepartmentDTO {
@@ -8,12 +10,15 @@ public class CompanyDepartmentDTO {
 
     private String departmentName;
 
-
+    private CompanyDTO company;
     private Date createdAt;
 
     private Date updatedAt;
 
     private Boolean active;
+
+    private Boolean status;
+
 
     public Long getCompanyId() {
         return companyId;
@@ -53,5 +58,21 @@ public class CompanyDepartmentDTO {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public CompanyDTO getCompany() {
+        return company;
+    }
+
+    public void setCompany(CompanyDTO company) {
+        this.company = company;
     }
 }

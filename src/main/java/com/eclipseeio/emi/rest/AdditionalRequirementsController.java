@@ -49,16 +49,17 @@ public class AdditionalRequirementsController {
     public Result deleteAdditionalRequirements(@PathVariable Long id) {
         Result result = new Result();
         try {
-            AdditionalRequirements additionalRequirements=additionalRequirementsRepository.findByIdAndActiveIsTrue(id);
+            AdditionalRequirements additionalRequirements=additionalRequirementsRepository.findById(id);
             if(additionalRequirements != null) {
                 if (additionalRequirements.getActive().equals(true)) {
                     additionalRequirements.setActive(false);
+                    result.setSuccess(true);
                     result.setMessage(MessageResource.MESSAGE_DELETE);
                     additionalRequirementsRepository.save(additionalRequirements);
                 }
-                else {
+                else{
                     result.setSuccess(true);
-                    result.setMessage(MessageResource.MESSAGE_DELETE); }
+                    result.setMessage("Already Deleted"); }
             }
         } catch (Exception e) {
             result.setSuccess(false);
@@ -114,27 +115,28 @@ public class AdditionalRequirementsController {
     @RequestMapping(method = RequestMethod.PUT, value = "updateAdditionalRequirements/{id}")
     public Result updateAdditionalRequirements(@PathVariable Long id, @RequestBody AdditionalRequirementsDTO additionalRequirementsDTO) {
 
-        Result result = new Result();
-        try {
+    /*    Result result = new Result();*/
+        Result result = Validator.validateAdditionalRequirements(additionalRequirementsDTO,additionalRequirementsRepository);
+        if (result.isSuccess()) {
+            try {
 
-            AdditionalRequirements additionalRequirements=additionalRequirementsRepository.findByIdAndActiveIsTrue(id);
+                AdditionalRequirements additionalRequirements = additionalRequirementsRepository.findByIdAndActiveIsTrue(id);
 
-            if(additionalRequirements!=null) {
-                additionalRequirements.setAdditionalRequirementsName(additionalRequirementsDTO.getAdditionalRequirementsName());
-                additionalRequirementsRepository.save(additionalRequirements);
-                result.setSuccess(true);
-                result.setMessage(MessageResource.MESSAGE_UPDATE);
+                if (additionalRequirements != null) {
+                    additionalRequirements.setAdditionalRequirementsName(additionalRequirementsDTO.getAdditionalRequirementsName());
+                    additionalRequirementsRepository.save(additionalRequirements);
+                    result.setSuccess(true);
+                    result.setMessage(MessageResource.MESSAGE_UPDATE);
+                } else {
+                    result.setMessage(MessageResource.MESSAGE_DATA_NOT_FOUND);
+                }
+            } catch (Exception e) {
+                result.setSuccess(false);
+                result.setMessage(e.getMessage());
+                e.printStackTrace();
+                e.getClass();
             }
-            else{
-                result.setMessage(MessageResource.MESSAGE_DATA_NOT_FOUND);
-            }
-        } catch (Exception e) {
-            result.setSuccess(false);
-            result.setMessage(e.getMessage());
-            e.printStackTrace();
-            e.getClass();
-        }
-        return result;
+        }return result;
     }
 
 
