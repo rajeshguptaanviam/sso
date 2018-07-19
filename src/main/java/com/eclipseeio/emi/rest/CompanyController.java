@@ -320,10 +320,7 @@ public class CompanyController {
             fileWriter.append(FILE_HEADER.toString());
             fileWriter.append(NEW_LINE_SEPARATOR);
             List<Company> company = companyRepository.findAll();
-<<<<<<< Updated upstream
             if(company!=null){
-
-=======
             for (Company company_ : company) {
                 fileWriter.append(String.valueOf(company_.getId()));
                 fileWriter.append(COMMA_DELIMITER);
@@ -345,7 +342,7 @@ public class CompanyController {
                 fileWriter.append(COMMA_DELIMITER);
                 fileWriter.append(String.valueOf(company_.getUpdatedAt()));
                 fileWriter.append(NEW_LINE_SEPARATOR);
->>>>>>> Stashed changes
+            }
             }
         } catch (Exception e) {
             result.setMessage(e.getMessage());
