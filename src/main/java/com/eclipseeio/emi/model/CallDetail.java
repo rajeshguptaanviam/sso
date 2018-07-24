@@ -5,27 +5,21 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
-
 
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
 @Table(name = "call_detail")
-
-public class CallDetail
-{
+public class CallDetail {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "call_topic")
-    private String callTopic;
 
-    @Column(name = "conversation_content")
+    @Column(name = "conversation_content", length = 5000)
     private String conversationContent;
 
     @CreationTimestamp
@@ -36,16 +30,20 @@ public class CallDetail
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
-
-
+    @Column(name = "status")
+    private Boolean status;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "company_id", referencedColumnName = "id")
+    @JoinColumn(name = "id_user", referencedColumnName = "id")
+    private User users_;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_company", referencedColumnName = "id")
     private Company company;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_callTopic", referencedColumnName = "id")
+    private CallTopic _callTopic;
 
     public Company getCompany() {
         return company;
@@ -57,19 +55,18 @@ public class CallDetail
 
     public Long getId() {
         return id;
-
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public String getCallTopic() {
-        return callTopic;
+    public CallTopic get_callTopic() {
+        return _callTopic;
     }
 
-    public void setCallTopic(String callTopic) {
-        this.callTopic = callTopic;
+    public void set_callTopic(CallTopic _callTopic) {
+        this._callTopic = _callTopic;
     }
 
     public String getConversationContent() {
@@ -96,11 +93,21 @@ public class CallDetail
         this.updatedAt = updatedAt;
     }
 
-    public User getUser() {
-        return user;
+    public User getUsers_() {
+        return users_;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsers_(User users_) {
+        this.users_ = users_;
     }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+
 }

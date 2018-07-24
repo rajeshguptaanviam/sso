@@ -1,5 +1,6 @@
 package com.eclipseeio.emi.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -14,6 +15,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "company")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Company implements Serializable {
 
 	@Id
@@ -73,6 +75,7 @@ public class Company implements Serializable {
 
 	@OneToOne(fetch= FetchType.EAGER)
 	private States states;
+
 	@OneToOne(fetch= FetchType.EAGER)
 	private AdditionalRequirements additionalRequirements;
 

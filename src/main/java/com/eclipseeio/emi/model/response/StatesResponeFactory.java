@@ -10,8 +10,8 @@ public final class StatesResponeFactory {
 
     }
 
-    public static StatesResponse create(States enquiry) {
-        return new StatesResponse(enquiry);
+    public static StatesResponse create(States states) {
+        return new StatesResponse(states);
 
     }
 }

@@ -10,8 +10,8 @@ public final class AssignToResponeFactory {
 
     }
 
-    public static AssignResponse create(AssignTo enquiry) {
-        return new AssignResponse(enquiry);
+    public static AssignResponse create(AssignTo assignTo) {
+        return new AssignResponse(assignTo);
 
     }
 }

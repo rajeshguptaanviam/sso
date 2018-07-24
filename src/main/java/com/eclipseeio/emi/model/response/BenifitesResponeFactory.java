@@ -10,8 +10,8 @@ public final class BenifitesResponeFactory {
 
     }
 
-    public static BenifitesResponse create(Benefits enquiry) {
-        return new BenifitesResponse(enquiry);
+    public static BenifitesResponse create(Benefits benefits) {
+        return new BenifitesResponse(benefits);
 
     }
 }

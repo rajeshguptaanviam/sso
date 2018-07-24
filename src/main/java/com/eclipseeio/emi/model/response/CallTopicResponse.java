@@ -1,5 +1,6 @@
-package com.eclipseeio.emi.model;
+package com.eclipseeio.emi.model.response;
 
+import com.eclipseeio.emi.model.CallTopic;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -8,27 +9,30 @@ import javax.persistence.*;
 import java.util.Date;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Entity
-@Table(name = "call_topic")
-public class CallTopic {
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class CallTopicResponse {
+
+
     private Long id;
 
-    @Column(name = "call_topic_name")
+
     private String callTopicName;
-    @Column(name = "active")
+
     private Boolean active;
-    @CreationTimestamp
-    @Column(name = "created_at")
+
+
     private Date createdAt;
 
-    @UpdateTimestamp
-    @Column(name = "updated_at")
+
     private Date updatedAt;
 
+    public CallTopicResponse(CallTopic callTopic) {
+        this.id = callTopic.getId();
+        this.callTopicName = callTopic.getCallTopicName();
+        this.active = callTopic.getActive();
+        this.createdAt = callTopic.getCreatedAt();
+        this.updatedAt = callTopic.getUpdatedAt();
+    }
 
     public Long getId() {
         return id;
@@ -69,6 +73,4 @@ public class CallTopic {
     public void setActive(Boolean active) {
         this.active = active;
     }
-
-
 }

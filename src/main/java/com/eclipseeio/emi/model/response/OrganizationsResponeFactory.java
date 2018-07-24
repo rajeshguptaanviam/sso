@@ -10,8 +10,8 @@ public final class OrganizationsResponeFactory {
 
     }
 
-    public static OrganizationResponse create(Organizations enquiry) {
-        return new OrganizationResponse(enquiry);
+    public static OrganizationResponse create(Organizations organizations) {
+        return new OrganizationResponse(organizations);
 
     }
 }

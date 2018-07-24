@@ -10,8 +10,8 @@ public final class IndustryResponeFactory {
 
     }
 
-    public static IndustryResponse create(Industry enquiry) {
-        return new IndustryResponse(enquiry);
+    public static IndustryResponse create(Industry industry) {
+        return new IndustryResponse(industry);
 
     }
 }

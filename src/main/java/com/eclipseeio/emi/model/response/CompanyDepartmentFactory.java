@@ -10,8 +10,8 @@ public final class CompanyDepartmentFactory {
 
     }
 
-    public static CompanyDepartmentResponse create(CompanyDepartment enquiry) {
-        return new CompanyDepartmentResponse(enquiry);
+    public static CompanyDepartmentResponse create(CompanyDepartment companyDepartment) {
+        return new CompanyDepartmentResponse(companyDepartment);
 
     }
 }

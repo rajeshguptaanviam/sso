@@ -9,8 +9,8 @@ public final class CompanyResponeFactory {
 
     }
 
-    public static CompanyResponse create(Company enquiry) {
-        return new CompanyResponse(enquiry);
+    public static CompanyResponse create(Company company) {
+        return new CompanyResponse(company);
 
     }
 }

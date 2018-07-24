@@ -1,6 +1,7 @@
 package com.eclipseeio.emi.model;
 
 import com.eclipseeio.emi.dto.CompanyDTO;
+import com.eclipseeio.emi.model.response.CallDetailsResponse;
 import com.eclipseeio.emi.model.response.CompanyDepartmentResponse;
 import com.eclipseeio.emi.model.response.CompanyResponse;
 import com.eclipseeio.emi.model.response.UserResponse;
@@ -30,13 +31,17 @@ public class Result {
     private List<AssignTo> assignToList;
     private CompanyDepartmentResponse companyDepartmentResponse;
     private List<CompanyDepartmentResponse> _companyDepartmentResponse;
-
+    private  List<CallDetailsResponse> callDetailsResponses;
     private List<CompanyDepartment> companyDepartmentList;
     private List<CompanyDTO> companyDTOS;
     private CompanyDepartment companyDepartment;
     private User user;
 
-    private  Policies policies;
+    private CallTopic callTopic;
+
+    private List<CallTopic> callTopics;
+
+    private Policies policies;
     private List<Policies> policiesList;
     private Organizations organizations;
     private List<Organizations> organizationsList;
@@ -44,7 +49,13 @@ public class Result {
     private PerformanceReview performanceReview;
     private List<PerformanceReview> performanceReviewList;
 
+    public CallTopic getCallTopic() {
+        return callTopic;
+    }
 
+    public void setCallTopic(CallTopic callTopic) {
+        this.callTopic = callTopic;
+    }
 
     public Page getPage() {
         return page;
@@ -213,8 +224,6 @@ public class Result {
     }
 
 
-
-
     public Policies getPolicies() {
         return policies;
     }
@@ -287,5 +296,21 @@ public class Result {
 
     public void set_companyDepartmentResponse(List<CompanyDepartmentResponse> _companyDepartmentResponse) {
         this._companyDepartmentResponse = _companyDepartmentResponse;
+    }
+
+    public List<CallTopic> getCallTopics() {
+        return callTopics;
+    }
+
+    public void setCallTopics(List<CallTopic> callTopics) {
+        this.callTopics = callTopics;
+    }
+
+    public List<CallDetailsResponse> getCallDetailsResponses() {
+        return callDetailsResponses;
+    }
+
+    public void setCallDetailsResponses(List<CallDetailsResponse> callDetailsResponses) {
+        this.callDetailsResponses = callDetailsResponses;
     }
 }

@@ -1,6 +1,7 @@
 package com.eclipseeio.emi.model.response;
 
 import com.eclipseeio.emi.model.CallDetail;
+import com.eclipseeio.emi.model.CallTopic;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.io.Serializable;
@@ -10,13 +11,19 @@ import java.util.Date;
 public class CallDetailsResponse implements Serializable {
     private Long id;
     private String callTopicName;
+    private CompanyResponse companyResponse;
+    private UserResponse userResponse;
+    private CallTopicResponse callTopicResponse;
+
     private Date createdAt;
     private Date updatedAt;
 
 
     public CallDetailsResponse(CallDetail callDetail) {
         this.id = callDetail.getId();
-        this.callTopicName = callDetail.getCallTopic();
+        this.companyResponse = CompanyResponeFactory.create(callDetail.getCompany());
+        this.userResponse = UserResponseFactory.create(callDetail.getUsers_());
+        this.callTopicResponse = CallTopicResponeFactory.create(callDetail.get_callTopic());
         this.createdAt = callDetail.getCreatedAt();
         this.updatedAt = callDetail.getUpdatedAt();
     }
@@ -51,5 +58,29 @@ public class CallDetailsResponse implements Serializable {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public CompanyResponse getCompanyResponse() {
+        return companyResponse;
+    }
+
+    public void setCompanyResponse(CompanyResponse companyResponse) {
+        this.companyResponse = companyResponse;
+    }
+
+    public UserResponse getUserResponse() {
+        return userResponse;
+    }
+
+    public void setUserResponse(UserResponse userResponse) {
+        this.userResponse = userResponse;
+    }
+
+    public CallTopicResponse getCallTopicResponse() {
+        return callTopicResponse;
+    }
+
+    public void setCallTopicResponse(CallTopicResponse callTopicResponse) {
+        this.callTopicResponse = callTopicResponse;
     }
 }

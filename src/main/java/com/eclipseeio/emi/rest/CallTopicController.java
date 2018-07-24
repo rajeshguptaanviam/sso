@@ -1,9 +1,9 @@
 package com.eclipseeio.emi.rest;
 
-import com.eclipseeio.emi.dto.IndustryDto;
-import com.eclipseeio.emi.model.Industry;
+import com.eclipseeio.emi.dto.CallTopicDTO;
+import com.eclipseeio.emi.model.CallTopic;
 import com.eclipseeio.emi.model.Result;
-import com.eclipseeio.emi.repository.IndustryRepository;
+import com.eclipseeio.emi.repository.CallTopicRepository;
 import com.eclipseeio.emi.service.MessageResource;
 import com.eclipseeio.emi.service.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,21 +13,19 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/")
-public class IndustryController {
-
-
+public class CallTopicController {
     @Autowired
-    IndustryRepository industryRepository;
+    private CallTopicRepository callTopicRepository;
 
-    @RequestMapping(method = RequestMethod.POST, value = "addIndustry")
-    public Result createIndustry(@RequestBody IndustryDto industryDto) {
-        Result result = Validator.validateIndustry(industryDto, industryRepository);
+    @RequestMapping(method = RequestMethod.POST, value = "addcallTopic")
+    public Result createIndustry(@RequestBody CallTopicDTO callTopicDTO) {
+        Result result = Validator.validateCallTopic(callTopicDTO, callTopicRepository);
         if (result.isSuccess()) {
             try {
-                Industry industry = new Industry();
-                industry.setIndustryName(industryDto.getIndustryName());
-                industry.setActive(true);
-                industryRepository.save(industry);
+                CallTopic callTopic = new CallTopic();
+                callTopic.setCallTopicName(callTopicDTO.getCallTopicName());
+                callTopic.setActive(true);
+                callTopicRepository.save(callTopic);
                 result.setSuccess(true);
                 result.setMessage(MessageResource.MESSAGE_CREATE);
             } catch (Exception e) {
@@ -40,19 +38,21 @@ public class IndustryController {
     }
 
 
-    @RequestMapping(value = "deleteIndustry/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "deleteCallTopic/{id}", method = RequestMethod.DELETE)
     public Result delete(@PathVariable Long id) {
         Result result = new Result();
         try {
-            Industry industry = industryRepository.findById(id);
-            if (industry != null) {
-                if (industry.getActive().equals(true)) {
-                    industry.setActive(false);
-                    industryRepository.save(industry);
+            CallTopic callTopic = callTopicRepository.findById(id);
+            if (callTopic != null) {
+
+                if (callTopic.getActive().equals(true)) {
+                    callTopic.setActive(false);
+                    callTopicRepository.save(callTopic);
+                    result.setSuccess(true);
                     result.setMessage(MessageResource.MESSAGE_DELETE);
                 } else {
                     result.setSuccess(true);
-                    result.setMessage("Allready deleted..");
+                    result.setMessage("Already deleted..");
                 }
             }
         } catch (Exception e) {
@@ -65,15 +65,13 @@ public class IndustryController {
     }
 
 
-    @RequestMapping(value = "getIndustry", method = RequestMethod.GET)
+    @RequestMapping(value = "getCallTopic", method = RequestMethod.GET)
     public Result getIndustry() {
         Result result = new Result();
         try {
-            List<Industry> industries = industryRepository.findAllByActive(true);
-
-            result.setIndustries(industries);
+            List<CallTopic> callTopics = callTopicRepository.findAllByActiveIsTrue();
+            result.setCallTopics(callTopics);
             result.setSuccess(true);
-
         } catch (Exception e) {
             result.setSuccess(false);
             result.setMessage(e.getMessage());
@@ -83,13 +81,13 @@ public class IndustryController {
     }
 
 
-    @RequestMapping(value = "getIndustrybyId/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "getcalltopic/{id}", method = RequestMethod.GET)
     public Result getIndustryById(@PathVariable Long id) {
         Result result = new Result();
         try {
-            Industry industries = industryRepository.findByIdAndActive(id, true);
-            if (industries != null) {
-                result.setIndustry(industries);
+            CallTopic callTopic = callTopicRepository.findByIdAndActiveIsTrue(id);
+            if (callTopic != null) {
+                result.setCallTopic(callTopic);
                 result.setSuccess(true);
             } else {
                 result.setMessage("no data found");
@@ -104,17 +102,17 @@ public class IndustryController {
     }
 
 
-    @RequestMapping(method = RequestMethod.PUT, value = "updateIndustry/{id}")
-    public Result updateIndustry(@PathVariable Long id, @RequestBody IndustryDto industryDto) {
+    @RequestMapping(method = RequestMethod.PUT, value = "updateCallTopic/{id}")
+    public Result updateIndustry(@PathVariable Long id, @RequestBody CallTopicDTO callTopicDTO) {
    /*     Result result = new Result();*/
 
-        Result result = Validator.validateIndustry(industryDto, industryRepository);
+        Result result = Validator.validateCallTopic(callTopicDTO, callTopicRepository);
         if (result.isSuccess()) {
             try {
-                Industry industries = industryRepository.findByIdAndActive(id, true);
-                if (industries != null) {
-                    industries.setIndustryName(industryDto.getIndustryName());
-                    industryRepository.save(industries);
+                CallTopic callTopic = callTopicRepository.findByIdAndActiveIsTrue(id);
+                if (callTopic != null) {
+                    callTopic.setCallTopicName(callTopicDTO.getCallTopicName());
+                    callTopicRepository.save(callTopic);
                     result.setSuccess(true);
                     result.setMessage(MessageResource.MESSAGE_UPDATE);
                 } else {
