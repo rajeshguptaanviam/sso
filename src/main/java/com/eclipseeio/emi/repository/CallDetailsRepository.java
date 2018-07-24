@@ -17,5 +17,6 @@ public interface CallDetailsRepository extends JpaRepository<CallDetail, Long> {
 
     Page<CallDetail> findAllByStatusIsTrue(Pageable pageable);
 
+    Page<CallDetail> findAll(Specification<CallDetail> specification,Pageable pageable);
 
 }

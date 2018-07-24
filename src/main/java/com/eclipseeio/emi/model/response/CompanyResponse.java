@@ -56,7 +56,7 @@ public class CompanyResponse implements Serializable {
         this.states = StatesResponeFactory.create(enquiry.getStates());
         this.industry = IndustryResponeFactory.create(enquiry.getIndustry());
         this.additionalRequirements = AdditionalRequrmentResponeFactory.create(enquiry.getAdditionalRequirements());
-        this.users = UserResponseFactory.create(enquiry.getUsers());
+        this.users = UserResponseFactory.create(enquiry.getUser());
 
         this.createdAt = enquiry.getCreatedAt();
         this.updatedAt = enquiry.getUpdatedAt();

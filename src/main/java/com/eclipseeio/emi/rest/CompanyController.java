@@ -81,7 +81,7 @@ public class CompanyController {
                 company.setWSIBRateGroupNo(companyDTO.getwSIBRateGroupNo());
                 Organizations organizations = organizationsRepository.findById(companyDTO.getOrganizationId());
                 if (user_ != null) {
-                    company.setUsers(user_);
+                    company.setUser(user_);
                 }
                 if (organizations != null) {
                     company.setOrganizations(organizations);
@@ -287,7 +287,7 @@ public class CompanyController {
             String query = queryParameters.get("query");
             Page<Company> page;
             if (query != null && query.trim().length() > 0) {
-                page = companyRepository.findAllByStatusIsTrue(new CompanySpecification(query), pageable);
+                page = companyRepository.findAll(new CompanySpecification(query), pageable);
             } else {
                 page = companyRepository.findAllByStatusIsTrue(pageable);
             }

@@ -22,8 +22,8 @@ public class CallDetailsResponse implements Serializable {
     public CallDetailsResponse(CallDetail callDetail) {
         this.id = callDetail.getId();
         this.companyResponse = CompanyResponeFactory.create(callDetail.getCompany());
-        this.userResponse = UserResponseFactory.create(callDetail.getUsers_());
-        this.callTopicResponse = CallTopicResponeFactory.create(callDetail.get_callTopic());
+        this.userResponse = UserResponseFactory.create(callDetail.getUser());
+        this.callTopicResponse = CallTopicResponeFactory.create(callDetail.getCallTopic());
         this.createdAt = callDetail.getCreatedAt();
         this.updatedAt = callDetail.getUpdatedAt();
     }

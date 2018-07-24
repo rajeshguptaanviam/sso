@@ -67,7 +67,7 @@ public class User implements UserDetails {
     @JoinColumn(name = "company_id", referencedColumnName = "id")
     private Company company;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "id")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     private List<CallDetail> callDetail;
 
     public Long getId() {
@@ -184,4 +184,7 @@ public class User implements UserDetails {
     public void setCallDetail(List<CallDetail> callDetail) {
         this.callDetail = callDetail;
     }
+
+
+
 }

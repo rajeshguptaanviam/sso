@@ -74,8 +74,8 @@ public class CallDetailsController {
             try {
                 callDetail1.setConversationContent(callDetailDto.getConversationContent());
                 callDetail1.setCompany(companyRepository.findById(callDetailDto.getCompanyId()));
-                callDetail1.set_callTopic(callTopicRepository.findById(callDetailDto.getCalltopicId()));
-                callDetail1.setUsers_(userRepository.findById(callDetailDto.getUserId()));
+                callDetail1.setCallTopic(callTopicRepository.findById(callDetailDto.getCalltopicId()));
+                callDetail1.setUser(userRepository.findById(callDetailDto.getUserId()));
                 callDetail1.setStatus(true);
                 callDetailsRepository.save(callDetail1);
                 result.setSuccess(true);
@@ -120,7 +120,7 @@ public class CallDetailsController {
             String query = queryParameters.get("query");
             Page<CallDetail> page;
             if (query != null && query.trim().length() > 0) {
-                page = callDetailsRepository.findAllByStatusIsTrue(new CallDetailsSpecification(query), pageable);
+                page = callDetailsRepository.findAll(new CallDetailsSpecification(query), pageable);
             } else {
                 page = callDetailsRepository.findAllByStatusIsTrue(pageable);
             }
@@ -156,7 +156,7 @@ public class CallDetailsController {
                     fileWriter.append(COMMA_DELIMITER);
                     Company company_ = callDetail.getCompany();
                     fileWriter.append(company_.getCompanyName());
-                    User user = callDetail.getUsers_();
+                    User user = callDetail.getUser();
                     fileWriter.append(user.getFirstName() + " " + user.getLastName());
                     fileWriter.append(COMMA_DELIMITER);
                     fileWriter.append(String.valueOf(callDetail.getCreatedAt()));

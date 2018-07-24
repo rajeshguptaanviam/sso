@@ -32,10 +32,10 @@ public class CallDetailsSpecification implements Specification<CallDetail> {
 
             p.getExpressions().add(
                     cb.or(
-                            cb.like(cb.lower(root.get("companyName")), "%" + filter.toLowerCase() + "%"),
-                            cb.like(cb.lower(root.get("firstName")), "%" + filter.toLowerCase() + "%"),
-                            cb.like(cb.lower(root.get("email")), "%" + filter.toLowerCase() + "%"),
-                            cb.like(cb.lower(root.get("callTopicName")), "%" + filter.toLowerCase() + "%")
+                            cb.like(cb.lower(enquiryCompanyJoin_.get("companyName")), "%" + filter.toLowerCase() + "%"),
+                            cb.like(cb.lower(enquiryUserJoin.get("firstName")), "%" + filter.toLowerCase() + "%"),
+                            cb.like(cb.lower(enquiryUserJoin.get("email")), "%" + filter.toLowerCase() + "%"),
+                            cb.like(cb.lower(enquiryCallTopicJoin_.get("callTopicName")), "%" + filter.toLowerCase() + "%")
 
 
                     )

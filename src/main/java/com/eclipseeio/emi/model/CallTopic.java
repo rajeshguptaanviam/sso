@@ -29,6 +29,9 @@ public class CallTopic {
     @Column(name = "updated_at")
     private Date updatedAt;
 
+    @OneToOne(mappedBy ="callTopic",cascade = CascadeType.ALL)
+    private CallDetail callDetail;
+
 
     public Long getId() {
         return id;
@@ -70,5 +73,11 @@ public class CallTopic {
         this.active = active;
     }
 
+    public CallDetail getCallDetail() {
+        return callDetail;
+    }
 
+    public void setCallDetail(CallDetail callDetail) {
+        this.callDetail = callDetail;
+    }
 }

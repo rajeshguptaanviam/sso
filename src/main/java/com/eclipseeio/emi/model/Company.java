@@ -94,7 +94,8 @@ public class Company implements Serializable {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
-	private User users;
+	private User user;
+
 
 	@CreationTimestamp
 	@Column(name = "created_at")
@@ -103,7 +104,9 @@ public class Company implements Serializable {
 	@UpdateTimestamp
 	@Column(name = "updated_at")
 	private Date updatedAt;
- 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "id")
+
+
+ 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
     private List<CallDetail> callDetail;
 
 
@@ -276,12 +279,12 @@ public class Company implements Serializable {
 		this.states = states;
 	}
 
-	public User getUsers() {
-		return users;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUsers(User users) {
-		this.users = users;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Benefits getBenefits() {
@@ -339,4 +342,6 @@ public class Company implements Serializable {
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
 	}
+
+
 }

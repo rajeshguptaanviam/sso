@@ -33,25 +33,17 @@ public class CallDetail {
     @Column(name = "status")
     private Boolean status;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_user", referencedColumnName = "id")
-    private User users_;
+    @ManyToOne(fetch = FetchType.EAGER,cascade =CascadeType.ALL)
+    private User user;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_company", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.EAGER,cascade =CascadeType.ALL)
     private Company company;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_callTopic", referencedColumnName = "id")
-    private CallTopic _callTopic;
+    private CallTopic callTopic;
 
-    public Company getCompany() {
-        return company;
-    }
 
-    public void setCompany(Company company) {
-        this.company = company;
-    }
 
     public Long getId() {
         return id;
@@ -61,13 +53,6 @@ public class CallDetail {
         this.id = id;
     }
 
-    public CallTopic get_callTopic() {
-        return _callTopic;
-    }
-
-    public void set_callTopic(CallTopic _callTopic) {
-        this._callTopic = _callTopic;
-    }
 
     public String getConversationContent() {
         return conversationContent;
@@ -93,12 +78,28 @@ public class CallDetail {
         this.updatedAt = updatedAt;
     }
 
-    public User getUsers_() {
-        return users_;
+    public User getUser() {
+        return user;
     }
 
-    public void setUsers_(User users_) {
-        this.users_ = users_;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public CallTopic getCallTopic() {
+        return callTopic;
+    }
+
+    public void setCallTopic(CallTopic callTopic) {
+        this.callTopic = callTopic;
     }
 
     public Boolean getStatus() {
