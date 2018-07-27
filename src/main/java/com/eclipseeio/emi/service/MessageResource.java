@@ -27,13 +27,7 @@ public class MessageResource {
         MESSAGE_UPDATE = messageSource.getMessage("msg_update", null, Locale.US);
         MESSAGE_DELETE = messageSource.getMessage("msg_delete", null, Locale.US);
         MESSAGE_CREATE = messageSource.getMessage("msg_create", null, Locale.US);
-        ALREADY_SUBSCRIBED = messageSource.getMessage("news_already_subscribed", null, Locale.US);
         MESSAGE_ADMIN_DELETE = messageSource.getMessage("msg_admin_delete", null, Locale.US);
-//MESSAGE_DATA_NOT_FOUND =messageSource.getMessage("data_not_found",null,Locale.US);
-
-      //  MESSAGE_EMAIL_NOT_EXIST = messageSource.getMessage("msg_email_not_exist", null, Locale.US);
-       // MESSAGE_FORGOT_PASSWORD_EMAIL_SENT =  messageSource.getMessage("msg_forget_password_email_sent", null, Locale.US);
-        //MESSAGE_TOKEN_EXPIRED =  messageSource.getMessage("msg_token_expired", null, Locale.US);
     }
 
 }

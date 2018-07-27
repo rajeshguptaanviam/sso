@@ -46,8 +46,6 @@ public class Result {
     private Organizations organizations;
     private List<Organizations> organizationsList;
 
-    private PerformanceReview performanceReview;
-    private List<PerformanceReview> performanceReviewList;
 
     public CallTopic getCallTopic() {
         return callTopic;
@@ -258,21 +256,7 @@ public class Result {
     }
 
 
-    public PerformanceReview getPerformanceReview() {
-        return performanceReview;
-    }
 
-    public void setPerformanceReview(PerformanceReview performanceReview) {
-        this.performanceReview = performanceReview;
-    }
-
-    public List<PerformanceReview> getPerformanceReviewList() {
-        return performanceReviewList;
-    }
-
-    public void setPerformanceReviewList(List<PerformanceReview> performanceReviewList) {
-        this.performanceReviewList = performanceReviewList;
-    }
 
     public List<CompanyDTO> getCompanyDTOS() {
         return companyDTOS;

@@ -351,23 +351,6 @@ public class Validator {
     }
 
 
-    public static Result validatePerformanceReview(PerformanceReviewDTO performanceReviewDTO, PerformanceReviewRepository performanceReviewRepository) {
-        Result result = new Result();
-        result.setSuccess(true);
-        if (performanceReviewDTO == null) {
-            result.setMessage("no input params found.");
-            result.setSuccess(false);
-        } else if (TextUtils.isEmpty(performanceReviewDTO.getPerformanceReviewName())) {
-            result.setMessage("PerformanceReview name is required*");
-            result.setSuccess(false);
-        }
-        PerformanceReview performanceReview = performanceReviewRepository.findByPerformanceReviewName(performanceReviewDTO.getPerformanceReviewName());
-        if (performanceReview != null) {
-            result.setMessage("Please try another performanceReview name.It is already taken");
-            result.setSuccess(false);
-        }
-        return result;
-    }
 
 
 }

@@ -17,23 +17,24 @@ public class CompanySpecification implements Specification<Company> {
     public CompanySpecification(String filter) {
         this.filter = filter;
     }
-   //@Nullable
+
+    //@Nullable
     @Override
     public Predicate toPredicate(Root<Company> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
         Predicate p = cb.disjunction();
 
         if (filter != null) {
             Join<Company, User> enquiryUserJoin = root.join("user", JoinType.LEFT);
-		    p.getExpressions().add(
-		    		 cb.or(
-                                    cb.like(cb.lower(root.get("companyName")), "%" + filter.toLowerCase()+"%")
-		                    ,       cb.like(cb.lower(root.get("contactName")),"%"+ filter.toLowerCase()+"%")
-                             ,       cb.like(cb.lower(enquiryUserJoin.get("firstName")),"%"+ filter.toLowerCase()+"%")
+            p.getExpressions().add(
+                    cb.or(
+                            cb.like(cb.lower(root.get("companyName")), "%" + filter.toLowerCase() + "%")
+                            , cb.like(cb.lower(root.get("contactName")), "%" + filter.toLowerCase() + "%")
+                            , cb.like(cb.lower(enquiryUserJoin.get("firstName")), "%" + filter.toLowerCase() + "%")
 
-		            )
-		    );
-		}
-        
+                    )
+            );
+        }
+
 
         return p;
     }
