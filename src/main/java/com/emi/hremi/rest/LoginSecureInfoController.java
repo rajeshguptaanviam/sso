@@ -387,7 +387,7 @@ public class LoginSecureInfoController {
                             modelAndView = new ModelAndView("redirect:"+loginDTO.getTargetUrl(),map);
                            // response.sendRedirect(loginDTO.getTargetUrl());
                             result.setMessage("successfully login");
-                            modelAndView = new ModelAndView(new MappingJackson2JsonView());
+                            //modelAndView = new ModelAndView(new MappingJackson2JsonView());
                             modelAndView.addObject("message",result.getMessage());
                             modelAndView.addObject("suceess",result.isSuccess());
                             return  modelAndView;
