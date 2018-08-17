@@ -7,7 +7,7 @@ public interface LoginSecureRepository extends JpaRepository<LoginSecureInfo,Lon
 
     LoginSecureInfo findByEmail(String email);
     LoginSecureInfo findByUsername(String username);
-    LoginSecureInfo findByCompanyName(String companyName);
+    LoginSecureInfo findByCompanyCode(String companyCode);
 
 
 }

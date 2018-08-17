@@ -5,14 +5,10 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -41,23 +37,19 @@ public class LoginSecureInfo {
     @Size(min = 6, message = "Name should have atleast 6 characters")
     private String username;
 
-    @Column(name = "company_name")
-    @NotNull(message = "Company Name cannot be null")
-    @NotEmpty(message = "company name can not be empty")
-    private String companyName;
-
-
-    /*@Column(name = "target_url")
-    @NotNull(message = "Target URL cannot be null")
-    @NotEmpty(message = "Target URL cannot be empty")
-    private String targetUrl;*/
-
+    @Column(name = "company_code",nullable = false)
+    @NotNull(message = "Company code cannot be null")
+    @NotEmpty(message = "company code can not be empty")
+    private String companyCode;
 
     @Column(name = "last_password_update")
     private Date lastPasswordUpdate;
 
     @Column(name = "link_status")
     private Integer linkStatus;
+
+    @Column(name = "token")
+    private String  token;
 
     @Column(name = "created_on")
     @CreationTimestamp
@@ -75,11 +67,12 @@ public class LoginSecureInfo {
         this.id = id;
     }
 
+    @NotNull
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(@NotNull String email) {
         this.email = email;
     }
 
@@ -99,36 +92,46 @@ public class LoginSecureInfo {
         this.password = password;
     }
 
+    @NotNull
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(@NotNull String username) {
         this.username = username;
     }
 
-    public String getCompanyName() {
-        return companyName;
+    @NotNull
+    public String getCompanyCode() {
+        return companyCode;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setCompanyCode(@NotNull String companyCode) {
+        this.companyCode = companyCode;
     }
 
-   /* public String getTargetUrl() {
-        return targetUrl;
-    }
-
-    public void setTargetUrl(String targetUrl) {
-        this.targetUrl = targetUrl;
-    }
-*/
     public Date getLastPasswordUpdate() {
         return lastPasswordUpdate;
     }
 
     public void setLastPasswordUpdate(Date lastPasswordUpdate) {
         this.lastPasswordUpdate = lastPasswordUpdate;
+    }
+
+    public Integer getLinkStatus() {
+        return linkStatus;
+    }
+
+    public void setLinkStatus(Integer linkStatus) {
+        this.linkStatus = linkStatus;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public Date getCreatedOn() {
@@ -145,12 +148,5 @@ public class LoginSecureInfo {
 
     public void setModifiedOn(Date modifiedOn) {
         this.modifiedOn = modifiedOn;
-    }
-
-    public Integer getLinkStatus() {
-        return linkStatus;
-    }
-    public void setLinkStatus(Integer linkStatus) {
-        this.linkStatus = linkStatus;
     }
 }

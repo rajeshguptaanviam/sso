@@ -12,6 +12,7 @@ public class Result {
     private Integer responseStatus;
     private boolean isSuccess;
     private String message;
+    private String token;
     private String forgetPasswordLink;
     private String targetUrl;
 
@@ -72,5 +73,13 @@ public class Result {
 
     public void setResponseStatus(Integer responseStatus) {
         this.responseStatus = responseStatus;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

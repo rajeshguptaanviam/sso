@@ -22,6 +22,8 @@ public class LogLoginSecureInfo {
     private String loginStatus;
     @Column(name = "login_message")
     private String loginMessage;
+    @Column(name = "forgot_url_link")
+    private String forgetUrlLink;
 
 
     @Column(name = "created_on")
@@ -79,5 +81,13 @@ public class LogLoginSecureInfo {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getForgetUrlLink() {
+        return forgetUrlLink;
+    }
+
+    public void setForgetUrlLink(String forgetUrlLink) {
+        this.forgetUrlLink = forgetUrlLink;
     }
 }

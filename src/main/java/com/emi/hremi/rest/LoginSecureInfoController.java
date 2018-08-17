@@ -12,8 +12,14 @@ import com.emi.hremi.repository.logRepositorty.LogLoginSecureRepository;
 import com.emi.hremi.services.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -36,7 +42,9 @@ public class LoginSecureInfoController {
     @Autowired
     LogLoginSecureRepository logLoginSecureRepository;
     //@Autowired private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
 
+    private HttpServletRequest request;
     @Value("${app.url}")
     private String aUrl;
 
@@ -61,13 +69,17 @@ public class LoginSecureInfoController {
                 result.setMessage("User name is already exist");
                 return  result;
             }
-            LoginSecureInfo loginSecureInfoCompanyName = loginSecureRepository.findByCompanyName(loginSecureInfo.getCompanyName());
-            if(loginSecureInfoCompanyName !=null){
-                result.setMessage("Company name is already exist");
+            LoginSecureInfo loginSecureInfoCompanyCode = loginSecureRepository.findByCompanyCode(loginSecureInfo.getCompanyCode());
+            if(loginSecureInfoCompanyCode !=null){
+                result.setMessage("Company code is already exist");
                 return  result;
             }
+            byte[] byt = loginSecureInfo.getEmail().getBytes(StandardCharsets.UTF_8);
+            String token = DatatypeConverter.printBase64Binary(byt);
+            loginSecureInfo.setToken(token);
             loginSecureRepository.save(loginSecureInfo);
             result.setSuccess(true);
+            result.setToken(token);
             result.setMessage("created successfully");
 
         }catch (Exception e){
@@ -117,6 +129,7 @@ public class LoginSecureInfoController {
         try {
             if(email!=null){
                 LoginSecureInfo loginSecureInfo = loginSecureRepository.findByEmail(email);
+                LogLoginSecureInfo logLoginSecureInfo =  new LogLoginSecureInfo();
                 if(loginSecureInfo != null){
                     byte[] message_= email.getBytes(StandardCharsets.UTF_8);
                     Instant instant = Instant.now();
@@ -129,12 +142,16 @@ public class LoginSecureInfoController {
                     String url = aUrl + "/resetPassword?token="+encoded+"&value="+value;
                     String message = "Click here to change new password <a href="+url+">Change Password</a>";
                     emailService.sendHtmlMail(loginSecureInfo.getEmail(),"Forgot Password",message);
+                    logLoginSecureInfo.setForgetUrlLink(url);
                     Timestamp ts=new Timestamp(timeStampMillis);
                     Date date=new Date(ts.getTime());
                     loginSecureInfo.setLastPasswordUpdate(date);
                     loginSecureRepository.save(loginSecureInfo);
                     result.setSuccess(true);
                     result.setMessage("Mail Sent");
+                    logLoginSecureInfo.setLoginStatus(Status.FORGOT_PASSWORD.name());
+                    logLoginSecureInfo.setUserId(loginSecureInfo.getId());
+                    logLoginSecureRepository.save(logLoginSecureInfo);
                 }else{
                     result.setSuccess(false);
                     result.setMessage("your email address Not register");
@@ -320,57 +337,116 @@ public class LoginSecureInfoController {
      * @return
      */
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public Result login(@RequestBody LoginDTO loginDTO, HttpServletRequest request, HttpServletResponse response){
+    public  ModelAndView login(@RequestBody LoginDTO loginDTO,HttpServletRequest request,HttpServletResponse response, ModelMap model){
         Result result = new Result();
+        ModelAndView modelAndView = null;
+        String comment = null;
         try {
             result.setSuccess(true);
             if(loginDTO != null){
-                if(loginDTO.getUsername() != null && !(loginDTO.getUsername().equals("")) && loginDTO.getUsername().trim().length() != 0){
-                    LoginSecureInfo loginSecureInfo=loginSecureRepository.findByUsername(loginDTO.getUsername());
+                if(loginDTO.getUsername() != null && !(loginDTO.getUsername().equals("")) && loginDTO.getUsername().trim().length() != 0
+                || loginDTO.getEmail() != null && !(loginDTO.getEmail().equals("")) && loginDTO.getEmail().trim().length() !=0){
+                    LoginSecureInfo loginSecureInfo = null;
+                    if(loginDTO.getUsername()!=null){
+                         loginSecureInfo=loginSecureRepository.findByUsername(loginDTO.getUsername());
+
+                    }else{
+                        loginSecureInfo=loginSecureRepository.findByEmail(loginDTO.getEmail());
+                    }
                     if(loginSecureInfo!=null){
+
                         HttpSession httpSession=request.getSession();
                         if(loginSecureInfo.getPassword().equals(loginDTO.getPassword())){
                             byte[] value_= loginSecureInfo.getEmail().getBytes(StandardCharsets.UTF_8);
                             String encoded = DatatypeConverter.printBase64Binary(value_);
+                            Long userId = loginSecureInfo.getId();
+                            byte[] uId=userId.toString().getBytes(StandardCharsets.UTF_8);
+                            String _userId=DatatypeConverter.printBase64Binary(uId);
+                            response.setHeader("userId",_userId);
+                            httpSession.setAttribute("userId",_userId);
                             httpSession.setAttribute("token",encoded);
                             response.setHeader("token",encoded);
-                            if(loginDTO.getTargetUrl()!=null && !loginDTO.getTargetUrl().equals("")){
+                            request.setAttribute("token",encoded);
+                            if(loginDTO.getTargetUrl()!=null && !loginDTO.getTargetUrl().equals("") && loginDTO.getTargetUrl().trim().length() !=0){
                                 result.setTargetUrl(loginDTO.getTargetUrl());
                             }else{
                                 result.setMessage("Target Url Mandatory");
+                                comment ="Target Url Mandatory";
                                 result.setSuccess(false);
-                                return result;
+                                modelAndView = new ModelAndView(new MappingJackson2JsonView());
+                                modelAndView.addObject("message",result.getMessage());
+                                modelAndView.addObject("suceess",result.isSuccess());
+                                return  modelAndView;
+
                             }
-                            response.sendRedirect(loginDTO.getTargetUrl());
-                            int responseStatus=response.getStatus();
-                            //result.setTargetUrl(loginSecureInfo.getTargetUrl());
+                            request.setAttribute("token",encoded);
+                          //  RequestDispatcher dispatcher = request.getRequestDispatcher(loginDTO.getTargetUrl());
+                           // dispatcher.forward(request,response);
+                            ModelMap map  =  new ModelMap();
+                            map.addAttribute("userId",_userId);
+                            modelAndView = new ModelAndView("redirect:"+loginDTO.getTargetUrl(),map);
+                           // response.sendRedirect(loginDTO.getTargetUrl());
                             result.setMessage("successfully login");
+                            modelAndView = new ModelAndView(new MappingJackson2JsonView());
+                            modelAndView.addObject("message",result.getMessage());
+                            modelAndView.addObject("suceess",result.isSuccess());
+                            return  modelAndView;
+                            //comment ="successfully login";
                         }else if(!(loginSecureInfo.getUsername().equals(loginDTO.getUsername()))){
                             result.setSuccess(false);
                             result.setMessage("Username Invalid");
+                            modelAndView = new ModelAndView(new MappingJackson2JsonView());
+                            modelAndView.addObject("message",result.getMessage());
+                            modelAndView.addObject("suceess",result.isSuccess());
+                            return  modelAndView;
+                            //comment = "Username Invalid";
                         }else{
                             result.setSuccess(false);
                             result.setMessage("Password Invalid");
+
+                            modelAndView = new ModelAndView(new MappingJackson2JsonView());
+                            modelAndView.addObject("message",result.getMessage());
+                            modelAndView.addObject("suceess",result.isSuccess());
+                            return  modelAndView;
+                           // comment = "Password Invalid";
                         }
+
                     }else{
                         result.setSuccess(false);
                         result.setMessage("Username & password are invalid");
+                        modelAndView = new ModelAndView(new MappingJackson2JsonView());
+                        modelAndView.addObject("message",result.getMessage());
+                        modelAndView.addObject("suceess",result.isSuccess());
+                        return  modelAndView;
+                        //comment = "Username & password are invalid";
                     }
                 }else{
 
                     result.setSuccess(false);
                     result.setMessage("Username can not be empty");
+                    modelAndView = new ModelAndView(new MappingJackson2JsonView());
+                    modelAndView.addObject("message",result.getMessage());
+                    modelAndView.addObject("suceess",result.isSuccess());
+                    return  modelAndView;
+                   // comment = "Username can not be empty";
                 }
             }
         }catch (Exception e){
             result.setMessage(e.getMessage());
             result.setSuccess(false);
+            e.printStackTrace();
         }
-        return result;
+        return modelAndView;
     }
 
+        @RequestMapping(value ="requestRedirect",method = RequestMethod.GET)
+        public ModelAndView some(HttpServletResponse response){
+        response.setHeader("token","SACHIN");
+        ModelMap map  =  new ModelMap();
+        map.addAttribute("token","SACHIN");
+        return new ModelAndView("redirect:http://localhost:1236/personal/info/signUp",map);
 
-
+}
 
 
 

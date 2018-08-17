@@ -1,8 +1,17 @@
 package com.emi.hremi.dto;
 
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.constraints.NotNull;
+
+@Validated
 public class LoginDTO {
 
     private String username;
+    private String email;
+    @NotEmpty
+    @NotNull
     private String password;
     private String targetUrl;
 
@@ -28,5 +37,14 @@ public class LoginDTO {
 
     public void setTargetUrl(String targetUrl) {
         this.targetUrl = targetUrl;
+    }
+
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

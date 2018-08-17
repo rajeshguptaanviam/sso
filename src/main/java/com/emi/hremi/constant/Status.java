@@ -1,5 +1,5 @@
 package com.emi.hremi.constant;
 
 public enum Status {
-    LOGIN,LOGOUT
+    LOGIN,LOGOUT,FORGOT_PASSWORD
 }
