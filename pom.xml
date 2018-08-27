@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.emi</groupId>
-	<artifactId>hr-managment</artifactId>
+	<artifactId>sso</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>Hr Managment</name>
-	<description>EMI  project</description>
+	<name>SSO: Hr Managment</name>
+	<description>SSO: EMI  project</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

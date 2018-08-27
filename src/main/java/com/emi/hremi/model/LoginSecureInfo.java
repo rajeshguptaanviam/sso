@@ -30,6 +30,8 @@ public class LoginSecureInfo {
 
     @Column(name = "password")
     @NotEmpty(message = "password can not be empty")
+    @NotNull(message = "password can not be null")
+    @Size(min = 6,message = "password lenght must be 6 char.")
     private String password;
 
     @Column(name = "username")
